@@ -2,6 +2,8 @@
 
 A project to run Petri net files from Tina (http://projects.laas.fr/tina) in the FlexFact simulator (https://fgdes.tf.fau.de/flexfact.html), using the Modbus TCP interface. This is not a live connection, as it doesn't run inside Tina. It simply uses Tina `.net` files as input.
 
+Documentation for how and why things are done is included in the code.
+
 ## How to name your transitions
 
 Petri nets work based on transitions. It is therefore an event driven system. From the point of view of this script, therefore, the name you choose to give your places doesn't matter.
