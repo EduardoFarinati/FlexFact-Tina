@@ -21,7 +21,7 @@ class ModbusClient(mbClient):
 
 class InputEvent:
     triggers: List[Tuple[int, bool]]
-    
+
     def __init__(self):
         self.triggers = []
 

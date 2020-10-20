@@ -131,7 +131,7 @@ class ModbusClient:
         ...
 
     def mode(self, mode=...):
-        """Get or set modbus mode (TCP or RTU)
+        """Get or set Modbus mode (TCP or RTU)
 
         :param mode: mode (MODBUS_TCP/MODBUS_RTU) to set or None for get value
         :type mode: int
@@ -141,7 +141,7 @@ class ModbusClient:
         ...
 
     def open(self) -> bool:
-        """Connect to modbus server (open TCP connection)
+        """Connect to Modbus server (open TCP connection)
 
         :returns: connect status (True if open)
         :rtype: bool
