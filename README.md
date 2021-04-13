@@ -22,7 +22,7 @@ Click on Edit->Textify. The resulting output can be save in a `.net` file.
 
 Install the dependencies with `pip install requirements.txt`, or simply install pyModbusTCP with `pip install pyModbusTCP`.
 
-Start the simulation in FlexFact and run the controller with `python controller.py`, or use `python controller.py -h` for more info.
+Select modbus as the communication protocol and start the simulation in FlexFact and run the controller with `python controller.py -d config.dev -n example/example.net`, or use `python controller.py -h` for more info.
 
 ## Limitations
 
