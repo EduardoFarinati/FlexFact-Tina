@@ -57,8 +57,9 @@ with ModbusClient(host="localhost", port=1502) as c:
         """
         result = False
         for trigger in inputs[event].triggers:
-            assert (readval := c.read_discrete_inputs(
-                trigger[0])) is not None, "Can't read discrete inputs"
+            readval = c.read_discrete_inputs(
+                trigger[0])
+            assert readval is not None, "Can't read discrete inputs"
             result = result or readval[0]
 
         return result
@@ -90,8 +91,8 @@ with ModbusClient(host="localhost", port=1502) as c:
         Read the values from all available addresses and update [read_values]
         """
         for address in addresses:
-            assert (input_vals := c.read_discrete_inputs(address)
-                    ) is not None, "Can't read discrete inputs"
+            input_vals = c.read_discrete_inputs(address)
+            assert input_vals is not None, "Can't read discrete inputs"
             read_values[address] = (read_values[address][1],
                                     input_vals[0])
 
@@ -152,6 +153,7 @@ with ModbusClient(host="localhost", port=1502) as c:
                 print(transition.name)
 
                 # Move the tokens around
+                # This is a basic implementation of a Petri net runner
                 for req in transition.reqs:
                     if req[2] == None:
                         places[req[0]] -= req[1]

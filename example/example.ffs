@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexFactConfiguration>
+<SimulationParameters>
+<OperatorPanel cnt="4"/>
+<FaultMonitor val="0"/>
+<Device type="Simplenet (local)"/>
+</SimulationParameters>
+<PlantComponents>
+<StackFeeder id="SF">
+<Position x="-4" y="-2" phi="std"/>
+</StackFeeder>
+<ConveyorBelt id="CB1">
+<Position x="-3" y="-2" phi="std"/>
+<FaultConfig enabled="no" id="Motor Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<FaultConfig enabled="no" id="Blind Sensor">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters len="2"/>
+</ConveyorBelt>
+<ExitSlide id="XS1">
+<Position x="7" y="1" phi="std"/>
+</ExitSlide>
+<Distributor id="DS1">
+<Position x="0" y="-2" phi="std"/>
+<Parameters len="1"/>
+</Distributor>
+<ConveyorBelt id="CB2">
+<Position x="1" y="-2" phi="std"/>
+<FaultConfig enabled="no" id="Motor Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<FaultConfig enabled="no" id="Blind Sensor">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters len="2"/>
+</ConveyorBelt>
+<Machine id="PM1">
+<Position x="-1" y="-2" phi="std"/>
+<FaultConfig enabled="no" id="Process Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters proc="A"/>
+</Machine>
+<ConveyorBelt id="CB4">
+<Position x="4" y="-1" phi="+90"/>
+<FaultConfig enabled="no" id="Motor Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<FaultConfig enabled="no" id="Blind Sensor">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters len="4"/>
+</ConveyorBelt>
+<ExitSlide id="XS3">
+<Position x="0" y="3" phi="+90"/>
+</ExitSlide>
+<Machine id="PM2">
+<Position x="3" y="-2" phi="std"/>
+<FaultConfig enabled="no" id="Process Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters proc="A"/>
+</Machine>
+<ConveyorBelt id="CB5">
+<Position x="0" y="-1" phi="+90"/>
+<FaultConfig enabled="no" id="Motor Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<FaultConfig enabled="no" id="Blind Sensor">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters len="3"/>
+</ConveyorBelt>
+<ConveyorBelt id="CB3">
+<Position x="5" y="-1" phi="+90"/>
+<FaultConfig enabled="no" id="Motor Breakdown">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<FaultConfig enabled="no" id="Blind Sensor">
+<Stochastic t_f="0" enabled="no" t_r="0"/>
+</FaultConfig>
+<Parameters len="2"/>
+</ConveyorBelt>
+<RotaryTable id="RB1">
+<Position x="5" y="1" phi="+90"/>
+</RotaryTable>
+<RotaryTable id="RB2">
+<Position x="4" y="3" phi="+90"/>
+</RotaryTable>
+<ExitSlide id="XS2">
+<Position x="6" y="3" phi="std"/>
+</ExitSlide>
+<Distributor id="DS2">
+<Position x="4" y="-2" phi="std"/>
+<Parameters len="1"/>
+</Distributor>
+<Distributor id="DS3">
+<Position x="5" y="-2" phi="std"/>
+<Parameters len="1"/>
+</Distributor>
+</PlantComponents>
+</FlexFactConfiguration>
