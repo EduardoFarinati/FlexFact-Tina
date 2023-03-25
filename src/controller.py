@@ -1,29 +1,31 @@
 import re
-from typing import Tuple, Any
+from typing import Dict, List, Tuple
 from pymodbus.exceptions import ModbusException
 
-from modbus_utils import ModbusClient
+from tina_utils import Transition
+from modbus_utils import InputEvent, ModbusClient, OutputEvent
+from special_tokens import strip_name
 
-
-# Remove everything after X in a given name
-DUP_RE = re.compile(r"X.*")
 
 # Modbus port
 PORT = 1502
 
 
-def checkTransition(rising: bool, ba_tup: Tuple[bool, bool]):
+def check_transition(rising: bool, ba_tup: Tuple[bool, bool]):
     """
-    A convenience function just to check if two values are rising or falling
+    A convenience function just to check if two values are rising or falling.
     """
-    if rising:
-        return ba_tup[0] == False and ba_tup[1] == True
-    else:
-        return ba_tup[0] == True and ba_tup[1] == False
+    return ba_tup[0] != ba_tup[1] == rising
 
 
 class Controller:
-    def __init__(self, transitions, places, inputs, outputs):
+    def __init__(
+        self,
+        transitions: List[Transition],
+        places: Dict[str, int],
+        inputs: Dict[str, InputEvent],
+        outputs: Dict[str, OutputEvent],
+    ):
         self.client = ModbusClient(host="localhost", port=PORT)
         self.transitions = transitions
         self.places = places
@@ -72,12 +74,12 @@ class Controller:
         """
         print(f"  e: {event}")
         for action in self.outputs[event].actions:
-            try: 
+            try:
                 self.client.write_coil(*action)
             except ModbusException as e:
                 raise ConnectionError("Can't write to coils") from e
 
-    def readAll(self):
+    def read_all(self):
         """
         Read the values from all available addresses and update [read_values]
         """
@@ -97,24 +99,24 @@ class Controller:
         """
 
         # Update the read values
-        self.readAll()
+        self.read_all()
 
         # Iterate through all the transitions in a network
         for transition in self.transitions:
-            can_move = True
+            is_enabled = True
 
             # Check if the token requirements to transition are met
             # (ie. if there is a token present at the correct location)
             for req in transition.reqs:
                 if req[2] == False and self.places[req[0]] >= req[1]:
-                    can_move = False
+                    is_enabled = False
                 elif req[2] != False and self.places[req[0]] < req[1]:
-                    can_move = False
+                    is_enabled = False
 
             # Check if the FlexFact requirements are met (ie. if a sensor has just turn on or off)
             # Adding ; to the start of a name means it is ignored and the transition is allowed
-            if transition.name[0] != ";":
-                name = DUP_RE.sub("", transition.name)
+            if not transition.name.startswith(";"):
+                name = strip_name(transition.name)
                 if name in self.inputs:
                     # There are technically multiple triggers defined
                     # This probably should be modified to work too, instead of using [0],
@@ -126,16 +128,16 @@ class Controller:
                     address = self.inputs[name].triggers[0][0]
 
                     # Is it rising or falling, or vice-versa
-                    can_trans = checkTransition(
+                    did_transition = check_transition(
                         rising, self.read_values[address]
                     )
                 else:
-                    can_trans = True
+                    did_transition = True
             else:
-                can_trans = True
+                did_transition = True
 
             # If all requirements are met
-            if can_move and can_trans:
+            if is_enabled and did_transition:
                 print(f"  t: {transition.name}")
 
                 # Move the tokens around
@@ -149,14 +151,14 @@ class Controller:
                 # Issue the commands via Modbus. Note that ; is also used to
                 # separate between command in the name, so you can use less places
                 # This hasn't been tested much
-                if DUP_RE.sub("", transition.name) in self.outputs:
+                if strip_name(transition.name) in self.outputs:
                     values = transition.name.split(";")
-                    if values[0] != "":
+                    if values[0]:
                         for v in values:
-                            self.write(DUP_RE.sub("", v))
+                            self.write(strip_name(v))
 
     def __enter__(self):
         return self
 
-    def __exit__(self, exc_type: Any, exc_value: Any, traceback: Any):
+    def __exit__(self, *_):
         self.client.close()

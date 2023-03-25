@@ -2,16 +2,15 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple, Union
 from pathlib import Path
 import xml.etree.cElementTree as ET
-from pymodbus.client import ModbusTcpClient as mbClient
+from pymodbus.client import ModbusTcpClient
 
 
-class ModbusClient(mbClient):
+class ModbusClient(ModbusTcpClient):
     def __init__(
         self,
         host: str,
         port: int,
         unit_id: Optional[int] = None,
-        #timeout: Optional[float] = None,
         debug: Optional[bool] = None,
     ):
         try:
@@ -19,7 +18,6 @@ class ModbusClient(mbClient):
                 host=host,
                 port=port,
                 unit_id=unit_id,
-                #timeout=timeout,
                 debug=debug,
                 auto_open=True,
             )
@@ -43,10 +41,11 @@ class OutputEvent:
     actions: List[Tuple[int, bool]] = field(default_factory=list)
 
 
-def parse_device(filepath: Union[Path, str]):
+def parse_device(
+    filepath: Union[Path, str]
+) -> Tuple[Dict[str, InputEvent], Dict[str, OutputEvent]]:
     """
-    Parse config for virtual Modbus. The XML can be exported from
-    (tina/flexfact)
+    Parse config for virtual Modbus XML. It should be exported from flexfact.
     Returns (inputs, outputs)
     """
     inputs: Dict[str, InputEvent] = {}
