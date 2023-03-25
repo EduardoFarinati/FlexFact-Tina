@@ -8,7 +8,7 @@ from controller import Controller
 
 def main():
     # Parse cli arguments
-    device_path, network_path, period = parse_args()
+    device_path, network_path, sleep_period = parse_args()
 
     # Parse config
     transitions, places = parse_network(network_path)
@@ -21,7 +21,7 @@ def main():
         try:
             while True:
                 controller.loop()
-                time.sleep(period)
+                time.sleep(sleep_period)
         except ConnectionError as e:
             print("")
             print(f"Connection closed, because: {e}.")

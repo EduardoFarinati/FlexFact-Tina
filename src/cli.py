@@ -3,38 +3,47 @@ from pathlib import Path
 from typing import Tuple
 
 
-DEFAULT_DEVICE_PATH = "config.dev"
-DEFAULT_NETWORK_PATH = "example.net"
+DEFAULT_DEVICE_PATH = "./example/example.dev"
+DEFAULT_NETWORK_PATH = "./example/example.net"
 DEFAULT_SLEEP_S = 0.01
 
 
-def checkFilepath(string: str) -> str:
-    if Path(string).is_file():
-        return string
+def is_valid_file(
+    parser: ArgumentParser, _str: str, expected_suffix: str
+) -> Path:
+    path = Path(_str)
+    if path.is_file() and path.suffix == expected_suffix:
+        return path
     else:
-        raise Exception(f"This isn't a valid file: {string}")
+        parser.error(f"Invalid file path: {_str}")
 
 
 def build_parser() -> ArgumentParser:
     parser = ArgumentParser(description="Run a Tina Petri net in FlexFact.")
 
+    def is_valid_device_config(_str: str) -> Path:
+        return is_valid_file(parser, _str, ".dev")
+
+    def is_valid_tina_network(_str: str) -> Path:
+        return is_valid_file(parser, _str, ".net")
+
     parser.add_argument(
         "-d",
         "--device",
-        type=checkFilepath,
+        type=is_valid_device_config,
         help="Path to a device config file",
         default=DEFAULT_DEVICE_PATH,
     )
     parser.add_argument(
         "-n",
         "--net",
-        type=checkFilepath,
+        type=is_valid_tina_network,
         help="Path to a Petri net file",
         default=DEFAULT_NETWORK_PATH,
     )
     parser.add_argument(
-        "-p",
-        "--period",
+        "-s",
+        "--sleep",
         type=float,
         help="Time (in seconds) between loops",
         default=DEFAULT_SLEEP_S,
@@ -47,8 +56,8 @@ def parse_args() -> Tuple[Path, Path, float]:
     parser = build_parser()
     args = parser.parse_args()
 
-    device_path = Path(args.device)
-    network_path = Path(args.net)
-    period = args.period
+    device_path = args.device
+    network_path = args.net
+    sleep_period = args.sleep
 
-    return device_path, network_path, period
+    return device_path, network_path, sleep_period
