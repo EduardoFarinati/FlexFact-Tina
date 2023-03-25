@@ -2,7 +2,7 @@ import re
 from typing import Tuple, Any
 from pymodbus.exceptions import ModbusException
 
-from modbus_utils import ModbusClient, parse_device
+from modbus_utils import ModbusClient
 
 
 # Remove everything after X in a given name
