@@ -4,7 +4,7 @@ from pymodbus.exceptions import ModbusException
 
 from tina_utils import Transition
 from modbus_utils import InputEvent, ModbusClient, OutputEvent
-from special_tokens import strip_name
+from special_tokens import strip_name, COMMENT
 
 
 # Modbus port
@@ -116,7 +116,7 @@ class Controller:
 
             # Check if the FlexFact requirements are met (ie. if a sensor has just turn on or off)
             # Adding ; to the start of a name means it is ignored and the transition is allowed
-            if not transition.name.startswith(";"):
+            if not transition.name.startswith(COMMENT):
                 name = strip_name(transition.name)
                 if name in self.inputs:
                     # There are technically multiple triggers defined
@@ -153,7 +153,7 @@ class Controller:
                 # separate between command in the name, so you can use less places
                 # This hasn't been tested much
                 if strip_name(transition.name) in self.outputs:
-                    values = transition.name.split(";")
+                    values = transition.name.split(COMMENT)
                     if values[0]:
                         for v in values:
                             self.write(strip_name(v))
