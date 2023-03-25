@@ -13,7 +13,8 @@ PORT = 1502
 
 def check_transition(rising: bool, ba_tup: Tuple[bool, bool]):
     """
-    A convenience function just to check if two values are rising or falling.
+    A convenience function just to check if two values of a signal
+    represent a rising or falling transition.
     """
     return ba_tup[0] != ba_tup[1] == rising
 
@@ -127,7 +128,7 @@ class Controller:
                     rising = self.inputs[name].triggers[0][1]
                     address = self.inputs[name].triggers[0][0]
 
-                    # Is it rising or falling, or vice-versa
+                    # Check if the signal is rising or falling, or vice-versa
                     did_transition = check_transition(
                         rising, self.read_values[address]
                     )
