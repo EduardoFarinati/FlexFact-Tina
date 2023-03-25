@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexFactConfiguration>
 <SimulationParameters>
-<OperatorPanel cnt="4"/>
+<OperatorPanel cnt="0"/>
 <FaultMonitor val="0"/>
-<Device type="Simplenet (local)"/>
+<Device type="Modbus"/>
 </SimulationParameters>
 <PlantComponents>
 <StackFeeder id="SF">
