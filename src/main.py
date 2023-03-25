@@ -6,6 +6,9 @@ from modbus_utils import parse_device
 from controller import Controller
 
 
+RECONNECT_PERIOD_S = 1.5
+
+
 def main():
     # Parse cli arguments
     device_path, network_path, sleep_period = parse_args()
@@ -15,22 +18,25 @@ def main():
     address, inputs, outputs = parse_device(device_path)
 
     # Start controller
-    with Controller(address, transitions, places, inputs, outputs) as controller:
-        print("Operation display:")
-
+    while True:
         try:
-            while True:
-                controller.loop()
-                time.sleep(sleep_period)
+            with Controller(
+                address, transitions, places, inputs, outputs
+            ) as controller:
+                print("Operation display:")
+                while True:
+                    controller.loop()
+                    time.sleep(sleep_period)
         except ConnectionError as e:
+            print(f"Connection reset, because: {e}.")
+            print(f"Caused by: {e.__cause__}.")
+            print(f"Trying to reconnect in {RECONNECT_PERIOD_S} seconds...")
             print("")
-            print(f"Connection closed, because: {e}.")
-            print(f"Caused by: {e.__cause__}")
+            time.sleep(RECONNECT_PERIOD_S)
         except KeyboardInterrupt:
-            pass
-
-        print("")
-        print("Stopping controller...")
+            print("")
+            print("Stopping controller...")
+            break
 
 
 if __name__ == "__main__":

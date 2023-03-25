@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 from pathlib import Path
 import xml.etree.cElementTree as ET
 from pymodbus.client import ModbusTcpClient
+from pymodbus.transaction import ModbusSocketFramer
 
 
 # Default modbus connection
@@ -14,21 +15,18 @@ class ModbusClient(ModbusTcpClient):
     def __init__(
         self,
         address: Tuple[str, int] = (DEFAULT_IP, DEFAULT_PORT),
-        unit_id: Optional[int] = None,
-        debug: Optional[bool] = None,
     ):
         ip, port = address
 
-        try:
-            super().__init__(
-                host=ip,
-                port=port,
-                unit_id=unit_id,
-                debug=debug,
-                auto_open=True,
-            )
-        except ValueError:
-            print("Error with host or port params")
+        super().__init__(
+            host=ip,
+            port=port,
+            framer=ModbusSocketFramer,  # type: ignore
+            retry_on_empty=True,
+            close_on_comm_error=False,
+            timeout=1,
+            retries=3,
+        )
 
     def __enter__(self):
         return self
