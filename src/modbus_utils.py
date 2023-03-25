@@ -5,17 +5,23 @@ import xml.etree.cElementTree as ET
 from pymodbus.client import ModbusTcpClient
 
 
+# Default modbus connection
+DEFAULT_IP = "localhost"
+DEFAULT_PORT = 1502
+
+
 class ModbusClient(ModbusTcpClient):
     def __init__(
         self,
-        host: str,
-        port: int,
+        address: Tuple[str, int] = (DEFAULT_IP, DEFAULT_PORT),
         unit_id: Optional[int] = None,
         debug: Optional[bool] = None,
     ):
+        ip, port = address
+
         try:
             super().__init__(
-                host=host,
+                host=ip,
                 port=port,
                 unit_id=unit_id,
                 debug=debug,
@@ -43,16 +49,25 @@ class OutputEvent:
 
 def parse_device(
     filepath: Union[Path, str]
-) -> Tuple[Dict[str, InputEvent], Dict[str, OutputEvent]]:
+) -> Tuple[Tuple[str, int], Dict[str, InputEvent], Dict[str, OutputEvent]]:
     """
     Parse config for virtual Modbus XML. It should be exported from flexfact.
     Returns (inputs, outputs)
     """
-    inputs: Dict[str, InputEvent] = {}
-    outputs: Dict[str, OutputEvent] = {}
+    inputs = {}
+    outputs = {}
 
     root = ET.parse(filepath).getroot()
 
+    # Parse slave address
+    slave_address_tag = root.find("SlaveAddress")
+    assert slave_address_tag is not None, "Expected SlaveAddress in XML"
+    slave_address = slave_address_tag.get("value")
+    assert slave_address is not None, "Expected SlaveAddress value in XML"
+    slave_ip, slave_port_str = slave_address.split(":", 1)
+    slave_port = int(slave_port_str)
+
+    # Parse events
     for tag in root.findall("EventConfiguration/Event"):
         event = {}
         name = tag.get("name")
@@ -96,4 +111,4 @@ def parse_device(
                 event.actions.append((address, value))
             outputs[name] = event
 
-    return inputs, outputs
+    return (slave_ip, slave_port), inputs, outputs

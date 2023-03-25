@@ -6,10 +6,6 @@ from modbus_utils import InputEvent, ModbusClient, OutputEvent
 from special_tokens import strip_name, COMMENT
 
 
-# Modbus port
-PORT = 1502
-
-
 def check_transition(rising: bool, ba_tup: Tuple[bool, bool]):
     """
     A convenience function just to check if two values of a signal
@@ -21,18 +17,19 @@ def check_transition(rising: bool, ba_tup: Tuple[bool, bool]):
 class Controller:
     def __init__(
         self,
+        address: Tuple[str, int],
         transitions: List[Transition],
         places: Dict[str, int],
         inputs: Dict[str, InputEvent],
         outputs: Dict[str, OutputEvent],
     ):
-        self.client = ModbusClient(host="localhost", port=PORT)
+        self.client = ModbusClient(address)
         self.transitions = transitions
         self.places = places
         self.inputs = inputs
         self.outputs = outputs
 
-        print(f"Controlling plant at {PORT}, with:")
+        print(f"Controlling plant at {address}, with:")
         print(f"  Transitions: {len(transitions)}")
         print(f"  Places: {len(places)}")
         print("")

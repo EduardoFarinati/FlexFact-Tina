@@ -12,10 +12,10 @@ def main():
 
     # Parse config
     transitions, places = parse_network(network_path)
-    inputs, outputs = parse_device(device_path)
+    address, inputs, outputs = parse_device(device_path)
 
     # Start controller
-    with Controller(transitions, places, inputs, outputs) as controller:
+    with Controller(address, transitions, places, inputs, outputs) as controller:
         print("Operation display:")
 
         try:
