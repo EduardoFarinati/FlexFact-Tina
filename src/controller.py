@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 from pymodbus.exceptions import ModbusException
 
-from parsers.network import Transition
+from parsers.network import InputArcTypes, Transition
 from parsers.device import InputEvent, OutputEvent
 from modbus_client import ModbusClient
 from special_tokens import strip_name, COMMENT
@@ -97,16 +97,6 @@ class Controller:
 
         # Iterate through all the transitions in a network
         for transition in self.transitions:
-            is_enabled = True
-
-            # Check if the token requirements to transition are met
-            # (ie. if there is a token present at the correct location)
-            for req in transition.reqs:
-                if req[2] == False and self.places[req[0]] >= req[1]:
-                    is_enabled = False
-                elif req[2] != False and self.places[req[0]] < req[1]:
-                    is_enabled = False
-
             # Check if the FlexFact requirements are met (ie. if a sensor has just turn on or off)
             # Adding ; to the start of a name means it is ignored and the transition is allowed
             if not transition.name.startswith(COMMENT):
@@ -131,16 +121,23 @@ class Controller:
                 did_transition = True
 
             # If all requirements are met
-            if is_enabled and did_transition:
+            if transition.is_enabled(self.places) and did_transition:
                 print(f"  t: {transition.name}")
 
                 # Move the tokens around
                 # This is a basic implementation of a Petri net runner
-                for req in transition.reqs:
-                    if req[2] == None:
-                        self.places[req[0]] -= req[1]
-                for out in transition.outs:
-                    self.places[out[0]] += out[1]
+                for input_arc in transition.input_arcs:
+                    place = input_arc.place
+                    weight = input_arc.weight
+                    _type = input_arc.type
+
+                    if _type == InputArcTypes.REGULAR:
+                        self.places[place] -= weight
+                for output_arc in transition.output_arcs:
+                    place = output_arc.place
+                    weight = output_arc.weight
+
+                    self.places[place] += weight
 
                 # Issue the commands via Modbus. Note that ; is also used to
                 # separate between command in the name, so you can use less places

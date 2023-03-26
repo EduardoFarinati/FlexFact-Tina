@@ -1,18 +1,63 @@
 from dataclasses import dataclass, field
+from enum import Enum, auto
 from typing import Dict, List, Tuple, Union
 from pathlib import Path
 
 
 @dataclass
+class Arc:
+    """Representation of an arc."""
+
+    place: str
+    weight: int
+
+
+@dataclass
+class OutputArc(Arc):
+    """Representation of an output arc."""
+
+
+class InputArcTypes(Enum):
+    """Definition of an input arc types."""
+
+    REGULAR = auto()
+    READ = auto()
+    INHIBITOR = auto()
+
+@dataclass
+class InputArc(Arc):
+    """Representation of an input arc."""
+
+    type: InputArcTypes
+
+    def is_met(self, tokens: int) -> bool:
+        """Check if the arc preconditions are met."""
+        if self.type == InputArcTypes.INHIBITOR:
+            return tokens < self.weight
+
+        return tokens >= self.weight
+
+
+@dataclass
 class Transition:
-    """
-    Representation of a tina arrow or equivalent
+    """Representation of a tina arrow or equivalent
     Includes the conditions required to move.
     """
 
     name: str
-    reqs: List = field(default_factory=list)
-    outs: List = field(default_factory=list)
+    input_arcs: List[InputArc] = field(default_factory=list)
+    output_arcs: List[OutputArc] = field(default_factory=list)
+
+    def is_enabled(self, places: Dict[str, int]) -> bool:
+        """Check if the transition is enabled, by checking each arc preconditions are met
+        (ie. if there are enough tokens present at the source place)."""
+
+        for input_arc in self.input_arcs:
+            tokens = places[input_arc.place]
+            if not input_arc.is_met(tokens):
+                return False
+
+        return True
 
 
 def parse(
@@ -42,29 +87,45 @@ def parse(
                     if "?" in element:
                         parts = element.split("?")
                         if int(parts[1]) > 0:
-                            transition.reqs.append(
-                                (parts[0], int(parts[1]), True)
+                            transition.input_arcs.append(
+                                InputArc(
+                                    parts[0], int(parts[1]), InputArcTypes.READ
+                                )
                             )
                         else:
-                            transition.reqs.append(
-                                (parts[0], abs(int(parts[1])), False)
+                            transition.input_arcs.append(
+                                InputArc(
+                                    parts[0],
+                                    abs(int(parts[1])),
+                                    InputArcTypes.INHIBITOR,
+                                )
                             )
                     else:
                         parts = element.split("*")
                         if len(parts) == 1:
-                            transition.reqs.append((parts[0], 1, None))
+                            transition.input_arcs.append(
+                                InputArc(parts[0], 1, InputArcTypes.REGULAR)
+                            )
                         else:
-                            transition.reqs.append(
-                                (parts[0], int(parts[1]), None)
+                            transition.input_arcs.append(
+                                InputArc(
+                                    parts[0],
+                                    int(parts[1]),
+                                    InputArcTypes.REGULAR,
+                                )
                             )
                 if arrow_index + 1 != len(elements):
                     for element in elements[arrow_index + 1 :]:
                         parts = element.split("*")
                         places[parts[0]] = 0
                         if len(parts) == 1:
-                            transition.outs.append((parts[0], 1))
+                            transition.output_arcs.append(
+                                OutputArc(parts[0], 1)
+                            )
                         else:
-                            transition.outs.append((parts[0], int(parts[1])))
+                            transition.output_arcs.append(
+                                OutputArc(parts[0], int(parts[1]))
+                            )
 
                 transitions.append(transition)
 
