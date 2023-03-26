@@ -28,6 +28,12 @@ class ModbusClient(ModbusTcpClient):
             retries=3,
         )
 
+        # Try to connect
+        if not self.connect():
+            raise ConnectionAbortedError(
+                "Unable to connect to modbus socket, is FlexFact open?"
+            )
+
     def __enter__(self):
         return self
 

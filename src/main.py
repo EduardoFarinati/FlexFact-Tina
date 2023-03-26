@@ -28,7 +28,7 @@ def main():
                 while True:
                     controller.loop()
                     time.sleep(sleep_period)
-        except ConnectionError as e:
+        except ConnectionResetError as e:
             print(f"Connection reset, because: {e}.")
             print(f"Caused by: {e.__cause__}.")
             print(f"Trying to reconnect in {RECONNECT_PERIOD_S} seconds...")

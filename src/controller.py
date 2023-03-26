@@ -61,7 +61,7 @@ class Controller:
                 readval = self.client.read_discrete_inputs(trigger[0])
                 result = result or readval.bits[0]
             except ModbusException as e:
-                raise ConnectionError("Can't read discrete input") from e
+                raise ConnectionResetError("Can't read discrete input") from e
 
         return result
 
@@ -74,7 +74,7 @@ class Controller:
             try:
                 self.client.write_coil(*action)
             except ModbusException as e:
-                raise ConnectionError("Can't write to coils") from e
+                raise ConnectionResetError("Can't write to coils") from e
 
     def read_all(self):
         """
@@ -88,7 +88,7 @@ class Controller:
                     input_vals.bits[0],
                 )
             except ModbusException as e:
-                raise ConnectionError("Can't read discrete inputs") from e
+                raise ConnectionResetError("Can't read discrete inputs") from e
 
     def loop(self):
         """
