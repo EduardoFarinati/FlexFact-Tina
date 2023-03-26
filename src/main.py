@@ -1,13 +1,38 @@
 #!/usr/bin/env python3
 import time
+from typing import Dict, List, Tuple
 
 from cli import parse_args
-from tina_utils import parse_network
+from tina_utils import Transition, parse_network
 from modbus_utils import parse_device
 from controller import Controller
 
 
 RECONNECT_PERIOD_S = 1.5
+
+
+def header_message(
+    address: Tuple[str, int],
+    transitions: List[Transition],
+    places: Dict[str, int],
+):
+    print(f"Controlling FlexFact plant at {address}, with:")
+    print(f"  Transitions: {len(transitions)}")
+    print(f"  Places: {len(places)}")
+    print("")
+
+
+def connection_reset_message(e: ConnectionResetError):
+    print(f"Connection reset, because: {e}.")
+    print(f"Caused by: {e.__cause__}.")
+    print(f"Trying to reconnect in {RECONNECT_PERIOD_S} seconds...")
+    print("")
+    time.sleep(RECONNECT_PERIOD_S)
+
+
+def closing_message():
+    print("")
+    print("Stopping controller...")
 
 
 def main():
@@ -20,6 +45,7 @@ def main():
 
     # Start controller
     while True:
+        header_message(address, transitions, places)
         try:
             with Controller(
                 address, transitions, places, inputs, outputs
@@ -29,14 +55,9 @@ def main():
                     controller.loop()
                     time.sleep(sleep_period)
         except ConnectionResetError as e:
-            print(f"Connection reset, because: {e}.")
-            print(f"Caused by: {e.__cause__}.")
-            print(f"Trying to reconnect in {RECONNECT_PERIOD_S} seconds...")
-            print("")
-            time.sleep(RECONNECT_PERIOD_S)
+            connection_reset_message(e)
         except KeyboardInterrupt:
-            print("")
-            print("Stopping controller...")
+            closing_message()
             break
 
 

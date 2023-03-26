@@ -30,11 +30,6 @@ class Controller:
         self.inputs = inputs
         self.outputs = outputs
 
-        print(f"Controlling FlexFact plant at {address}, with:")
-        print(f"  Transitions: {len(transitions)}")
-        print(f"  Places: {len(places)}")
-        print("")
-
         # Get all the addresses. These addresses appear more than once in the .net file
         # so use a set to avoid repeats
         self.addresses = set(
