@@ -30,7 +30,7 @@ class Controller:
         self.inputs = inputs
         self.outputs = outputs
 
-        print(f"Controlling plant at {address}, with:")
+        print(f"Controlling FlexFact plant at {address}, with:")
         print(f"  Transitions: {len(transitions)}")
         print(f"  Places: {len(places)}")
         print("")

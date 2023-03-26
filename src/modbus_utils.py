@@ -31,7 +31,8 @@ class ModbusClient(ModbusTcpClient):
         # Try to connect
         if not self.connect():
             raise ConnectionAbortedError(
-                "Unable to connect to modbus socket, is FlexFact open?"
+                "Unable to connect to modbus socket, is FlexFact open? "
+                "Is Modbus selected on the Simulation menu?"
             )
 
     def __enter__(self):
