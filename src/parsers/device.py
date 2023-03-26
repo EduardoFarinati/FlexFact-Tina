@@ -1,45 +1,7 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple, Union
 from pathlib import Path
+from typing import Dict, List, Tuple, Union
 import xml.etree.cElementTree as ET
-from pymodbus.client import ModbusTcpClient
-from pymodbus.transaction import ModbusSocketFramer
-
-
-# Default modbus connection
-DEFAULT_IP = "localhost"
-DEFAULT_PORT = 1502
-
-
-class ModbusClient(ModbusTcpClient):
-    def __init__(
-        self,
-        address: Tuple[str, int] = (DEFAULT_IP, DEFAULT_PORT),
-    ):
-        ip, port = address
-
-        super().__init__(
-            host=ip,
-            port=port,
-            framer=ModbusSocketFramer,  # type: ignore
-            retry_on_empty=True,
-            close_on_comm_error=False,
-            timeout=1,
-            retries=3,
-        )
-
-        # Try to connect
-        if not self.connect():
-            raise ConnectionAbortedError(
-                "Unable to connect to modbus socket, is FlexFact open? "
-                "Is Modbus selected on the Simulation menu?"
-            )
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type: Any, exc_value: Any, traceback: Any):
-        self.close()
 
 
 @dataclass
@@ -52,7 +14,7 @@ class OutputEvent:
     actions: List[Tuple[int, bool]] = field(default_factory=list)
 
 
-def parse_device(
+def parse(
     filepath: Union[Path, str]
 ) -> Tuple[Tuple[str, int], Dict[str, InputEvent], Dict[str, OutputEvent]]:
     """

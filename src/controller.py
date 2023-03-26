@@ -1,8 +1,9 @@
 from typing import Dict, List, Tuple
 from pymodbus.exceptions import ModbusException
 
-from tina_utils import Transition
-from modbus_utils import InputEvent, ModbusClient, OutputEvent
+from parsers.network import Transition
+from parsers.device import InputEvent, OutputEvent
+from modbus_client import ModbusClient
 from special_tokens import strip_name, COMMENT
 
 

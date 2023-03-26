@@ -51,7 +51,7 @@ def build_parser() -> ArgumentParser:
     return parser
 
 
-def parse_args() -> Tuple[Path, Path, float]:
+def get_args() -> Tuple[Path, Path, float]:
     parser = build_parser()
     args = parser.parse_args()
 
