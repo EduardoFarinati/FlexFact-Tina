@@ -1,14 +1,12 @@
 # flexfact_tina
 
-A project to run Petri net files from Tina (http://projects.laas.fr/tina) in the FlexFact simulator (https://fgdes.tf.fau.de/flexfact.html), using the Modbus TCP interface. This is not a live connection, as it doesn't run inside Tina. It simply uses Tina `.net` files as input.
+This project aims to integrate [Petri nets](https://en.wikipedia.org/wiki/Petri_net) created in [Tina](http://projects.laas.fr/tina) with the [FlexFact simulator](https://fgdes.tf.fau.de/flexfact.html) by leveraging it's Modbus TCP interface. It is important to note that this integration is not a live connection, as it relies on exported `.net` files as input rather than running within Tina itself.
 
-Documentation for how and why things are done is included in the code.
+## How transitions should be named
 
-## How to name your transitions
+Petri nets operate based on transitions, making them an event-driven system. As such, from the point of view of this script, the names assigned to places don't matter.
 
-Petri nets work based on transitions. It is therefore an event driven system. From the point of view of this script, therefore, the name you choose to give your places doesn't matter.
-
-The name you give your transitions does: this is what links a Tina transition to a FlexFact event. The way this has been defined is that the name of a transition should match the name of the FlexFact event (details of which you can find on the FlexFact website). However, since Tina (and probably the formal definition of Petri nets) don't permit duplicate transition names, anything after the character "X" in a transition name (except ";" - more details later) is ignored. This means you can call your transitions `sf_fdon`, `sf_fdonX` and `sf_fdonXsomereallylongsentence` and they will all be treated as `sf_fdon` when sending an event to FlexFact. While this may not be formally acceptable, it leaves the Petri net much simpler, especially when dealing with forking.
+However, the names assigned to transitions do: this is what links a Tina transition to a FlexFact event. The way this has been defined is that the name of a transition should match the name of the FlexFact event (details of which you can find on the FlexFact website). However, since Tina (and probably the formal definition of Petri nets) don't permit duplicate transition names, anything after the character "X" in a transition name (except ";" - more details later) is ignored. This means you can call your transitions `sf_fdon`, `sf_fdonX` and `sf_fdonXsomereallylongsentence` and they will all be treated as `sf_fdon` when sending an event to FlexFact. While this may not be formally acceptable, it leaves the Petri net much simpler, especially when dealing with forking.
 
 The ";" character at the start of a name ignores that transition, allowing tokens to pass freely. This is helpful when using a transition to explain something.
 
@@ -16,13 +14,13 @@ When used in the middle of a name, ";" separates the name into component parts, 
 
 ## How to export your Petri nets
 
-Click on Edit->Textify. The resulting output can be save in a `.net` file.
+Click on "Edit &rarr; Textify" and a plain text equivalent of your Petri net will be shown. Click on "File &rarr; save" and save this output in a `.net` file.
 
 ## Running the controller
 
 Install the dependencies with `pip install -r requirements.txt`, or simply install pymodbus with `pip install pymodbus`.
 
-Select modbus as the communication protocol and start the simulation in FlexFact and run the controller with `python src/main.py -d example/config.dev -n example/example.net`, or use `python src/main.py -h` for more info.
+Select modbus as the communication protocol and start the simulation in FlexFact and run the controller with `python src/main.py -d your_modbus_config.dev -n your_tina_export.net`. You can also use `python src/main.py -h` for more info.
 
 ## Limitations
 
