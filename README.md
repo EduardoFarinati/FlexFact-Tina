@@ -14,7 +14,7 @@ When used in the middle of a name, ";" separates the name into component parts, 
 
 ## How to export your Petri nets
 
-Click on "Edit &rarr; Textify" and a plain text equivalent of your Petri net will be shown. Click on "File &rarr; save" and save this output in a `.net` file.
+Click on "Edit → Textify" and a plain text equivalent of your Petri net will be shown. Click on "File → save" and save this output in a `.net` file.
 
 ## Running the controller
 
