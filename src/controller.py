@@ -31,26 +31,28 @@ class Controller:
         self.inputs = inputs
         self.outputs = outputs
 
-        # Get all the addresses. These addresses appear more than once in the .net file
-        # so use a set to avoid repeats
+        # Get all the addresses. These addresses appear more than once in the
+        # .net file so use a set to avoid repeats
         self.addresses = set(
             [i[0] for value in self.inputs.values() for i in value.triggers]
         )
 
-        # Intantiate the read values to false. This is needed because we use rising and falling
-        # edges. While it would be possible to use the direct values, this misses the point because
-        # tina is supposed to be for *event* oriented programming
-        # This using a tuple because it stores the current and previous value
+        # Intantiate the read values to false. This is needed because we use
+        # rising and falling edges. While it would be possible to use the
+        # direct values, this misses the point because tina is supposed
+        # to be for *event* oriented programming. This uses a tuple
+        # because it stores the current and previous value
         self.read_values = {
             address: (False, False) for address in self.addresses
         }
 
     def read(self, event: str) -> bool:
         """
-        Read the value of a signal from the bus. This isn't very useful in practice,
-        I *think* because this would read an address multiple times if it appeared more than once
-        It's probably faster to use the current system of reading all the values and
-        acting based on that
+        Read the value of a signal from the bus. This isn't very useful
+        in practice, I *think* because this would read an address
+        multiple times if it appeared more than once. It's probably faster
+        to use the current system of reading all the values and acting
+        based on that.
         """
         result = False
         for trigger in self.inputs[event].triggers:
@@ -97,15 +99,16 @@ class Controller:
 
         # Iterate through all the transitions in a network
         for transition in self.transitions:
-            # Check if the FlexFact requirements are met (ie. if a sensor has just turn on or off)
-            # Adding ; to the start of a name means it is ignored and the transition is allowed
+            # Check if the FlexFact requirements are met (ie. if a sensor has
+            # just turn on or off). Adding ; to the start of a name means it
+            # is ignored and the transition is allowed
             if not transition.name.startswith(COMMENT):
                 name = strip_name(transition.name)
                 if name in self.inputs:
                     # There are technically multiple triggers defined
-                    # This probably should be modified to work too, instead of using [0],
-                    # but in my use it was never needed. I can't actually think when this
-                    # would be used
+                    # This probably should be modified to work too, instead of
+                    # using [0], but in my use it was never needed. I can't
+                    # actually think when this would be used
 
                     # Should it be rising or falling to transition
                     rising = self.inputs[name].triggers[0][1]
@@ -140,8 +143,8 @@ class Controller:
                     self.places[place] += weight
 
                 # Issue the commands via Modbus. Note that ; is also used to
-                # separate between command in the name, so you can use less places
-                # This hasn't been tested much
+                # separate between command in the name, so you can use less
+                # places. This hasn't been tested much
                 if strip_name(transition.name) in self.outputs:
                     values = transition.name.split(COMMENT)
                     if values[0]:

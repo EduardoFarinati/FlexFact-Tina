@@ -37,4 +37,3 @@ class ModbusClient(ModbusTcpClient):
 
     def __exit__(self, *_):
         self.close()
-

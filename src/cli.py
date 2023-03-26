@@ -16,7 +16,8 @@ def is_valid_file(
         return path
     else:
         parser.error(
-            f"Invalid path '{_str}', should be a file path such as 'your_file{expected_suffix}'"
+            f"Invalid path '{_str}', should be a file path such as"
+            f" 'your_file{expected_suffix}'"
         )
 
 

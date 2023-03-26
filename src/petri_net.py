@@ -9,7 +9,7 @@ class Arc:
 
     place: str
     weight: int
-    
+
 
 @dataclass
 class OutputArc(Arc):
@@ -22,6 +22,7 @@ class InputArcTypes(Enum):
     REGULAR = auto()
     READ = auto()
     INHIBITOR = auto()
+
 
 @dataclass
 class InputArc(Arc):
@@ -48,8 +49,9 @@ class Transition:
     output_arcs: List[OutputArc] = field(default_factory=list)
 
     def is_enabled(self, places: Dict[str, int]) -> bool:
-        """Check if the transition is enabled, by checking each arc preconditions are met
-        (ie. if there are enough tokens present at the source place)."""
+        """Check if the transition is enabled, by checking each arc
+        preconditions are met (ie. if there are enough tokens
+        present at the source place)."""
 
         for input_arc in self.input_arcs:
             tokens = places[input_arc.place]
