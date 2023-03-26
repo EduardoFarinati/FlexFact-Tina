@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import time
 
 from cli import parse_args
