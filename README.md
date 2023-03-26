@@ -4,7 +4,7 @@ This project aims to integrate [Petri nets](https://en.wikipedia.org/wiki/Petri_
 
 ## How transitions should be named
 
-Petri nets operate based on transitions, making them an event-driven system. As such, from the point of view of this script, the names assigned to places don't matter.
+Petri nets operate based on transitions, making them event-driven systems. As such, from the point of view of this script, the names assigned to places don't matter.
 
 However, the names assigned to transitions do: this is what links a Tina transition to a FlexFact event. The way this has been defined is that the name of a transition should match the name of the FlexFact event (details of which you can find on the FlexFact website). However, since Tina (and probably the formal definition of Petri nets) don't permit duplicate transition names, anything after the character "X" in a transition name (except ";" - more details later) is ignored. This means you can call your transitions `sf_fdon`, `sf_fdonX` and `sf_fdonXsomereallylongsentence` and they will all be treated as `sf_fdon` when sending an event to FlexFact. While this may not be formally acceptable, it leaves the Petri net much simpler, especially when dealing with forking.
 
