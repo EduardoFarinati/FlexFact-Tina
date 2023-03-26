@@ -2,4 +2,5 @@
 
 # This script is a helper to easily call
 # the main.py file with a python interpreter
-/usr/bin/env python3 -B ./src/main.py "$@"
+root_dir="$(dirname "$0")"
+/usr/bin/env python3 -B $root_dir/src/main.py "$@"
