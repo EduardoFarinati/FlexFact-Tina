@@ -6,12 +6,13 @@ from modbus_utils import InputEvent, ModbusClient, OutputEvent
 from special_tokens import strip_name, COMMENT
 
 
-def check_transition(rising: bool, ba_tup: Tuple[bool, bool]):
+def check_transition(rising: bool, signal_values: Tuple[bool, bool]):
     """
     A convenience function just to check if two values of a signal
     represent a rising or falling transition.
     """
-    return ba_tup[0] != ba_tup[1] == rising
+    previous, next = signal_values
+    return previous != next == rising
 
 
 class Controller:
