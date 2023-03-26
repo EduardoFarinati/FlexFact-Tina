@@ -15,37 +15,36 @@ def is_valid_file(
     if path.is_file() and path.suffix == expected_suffix:
         return path
     else:
-        parser.error(f"Invalid file path: {_str}")
+        parser.error(
+            f"Invalid path '{_str}', should be a file path such as 'your_file{expected_suffix}'"
+        )
 
 
 def build_parser() -> ArgumentParser:
-    parser = ArgumentParser(description="Run a Tina Petri net in FlexFact.")
-
-    def is_valid_device_config(_str: str) -> Path:
-        return is_valid_file(parser, _str, ".dev")
-
-    def is_valid_tina_network(_str: str) -> Path:
-        return is_valid_file(parser, _str, ".net")
+    parser = ArgumentParser(
+        prog="flexfact_tina",
+        description="A CLI tool to interface a Tina Petri net with FlexFact.",
+    )
 
     parser.add_argument(
         "-d",
         "--device",
-        type=is_valid_device_config,
-        help="Path to a device config file",
+        type=lambda _str: is_valid_file(parser, _str, ".dev"),
+        help="path to a device config file",
         default=DEFAULT_DEVICE_PATH,
     )
     parser.add_argument(
         "-n",
         "--net",
-        type=is_valid_tina_network,
-        help="Path to a Petri net file",
+        type=lambda _str: is_valid_file(parser, _str, ".net"),
+        help="path to a Petri net file",
         default=DEFAULT_NETWORK_PATH,
     )
     parser.add_argument(
         "-s",
         "--sleep",
         type=float,
-        help="Time (in seconds) between loops",
+        help="time (in seconds) between FlexFact calls",
         default=DEFAULT_SLEEP_S,
     )
 
