@@ -7,13 +7,13 @@ from petri_net import PetriNet
 from special_tokens import strip_name, COMMENT
 
 
-def check_transition(rising: bool, signal_values: Tuple[bool, bool]):
+def check_transition(edge_type: bool, signal_values: Tuple[bool, bool]):
     """
     A convenience function just to check if two values of a signal
     represent a rising or falling transition.
     """
     previous, next = signal_values
-    return previous != next == rising
+    return previous != next == edge_type
 
 
 class Controller:
@@ -109,12 +109,12 @@ class Controller:
                     # actually think when this would be used
 
                     # Should it be rising or falling to transition
-                    rising = self.inputs[name].triggers[0][1]
+                    edge_type = self.inputs[name].triggers[0][1]
                     address = self.inputs[name].triggers[0][0]
 
                     # Check if the signal is rising or falling, or vice-versa
                     did_transition = check_transition(
-                        rising, self.read_values[address]
+                        edge_type, self.read_values[address]
                     )
                 else:
                     did_transition = True

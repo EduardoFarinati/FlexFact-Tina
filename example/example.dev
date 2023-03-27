@@ -1,692 +1,692 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE ModbusDevice SYSTEM "http://www.faudes.org/dtd/1.0/modbusdevice.dtd">
 <ModbusDevice name="exampleSupervisor">
-<TimeScale value="10"/>
-<SampleInterval value="1000"/>
-<SynchronousWrite value="true"/>
-<Role value="master"/>
-<SlaveAddress value="localhost:1502"/>
-<RemoteImage>
-<Inputs mbaddr="0" count="79"/>
-<Outputs mbaddr="0" count="79"/>
-</RemoteImage>
-<EventConfiguration>
-<Event name="cb1_wpar+" iotype="input">
-<Triggers>
-<PositiveEdge address="2"/>
-</Triggers>
-</Event>
-<Event name="cb1_wpar-" iotype="input">
-<Triggers>
-<PositiveEdge address="3"/>
-</Triggers>
-</Event>
-<Event name="cb1_wplv+" iotype="input">
-<Triggers>
-<NegativeEdge address="2"/>
-</Triggers>
-</Event>
-<Event name="cb1_wplv-" iotype="input">
-<Triggers>
-<NegativeEdge address="3"/>
-</Triggers>
-</Event>
-<Event name="cb2_wpar+" iotype="input">
-<Triggers>
-<PositiveEdge address="6"/>
-</Triggers>
-</Event>
-<Event name="cb2_wpar-" iotype="input">
-<Triggers>
-<PositiveEdge address="7"/>
-</Triggers>
-</Event>
-<Event name="cb2_wplv+" iotype="input">
-<Triggers>
-<NegativeEdge address="6"/>
-</Triggers>
-</Event>
-<Event name="cb2_wplv-" iotype="input">
-<Triggers>
-<NegativeEdge address="7"/>
-</Triggers>
-</Event>
-<Event name="cb3_wpar+" iotype="input">
-<Triggers>
-<PositiveEdge address="10"/>
-</Triggers>
-</Event>
-<Event name="cb3_wpar-" iotype="input">
-<Triggers>
-<PositiveEdge address="11"/>
-</Triggers>
-</Event>
-<Event name="cb3_wplv+" iotype="input">
-<Triggers>
-<NegativeEdge address="10"/>
-</Triggers>
-</Event>
-<Event name="cb3_wplv-" iotype="input">
-<Triggers>
-<NegativeEdge address="11"/>
-</Triggers>
-</Event>
-<Event name="cb4_wpar+" iotype="input">
-<Triggers>
-<PositiveEdge address="14"/>
-</Triggers>
-</Event>
-<Event name="cb4_wpar-" iotype="input">
-<Triggers>
-<PositiveEdge address="15"/>
-</Triggers>
-</Event>
-<Event name="cb4_wplv+" iotype="input">
-<Triggers>
-<NegativeEdge address="14"/>
-</Triggers>
-</Event>
-<Event name="cb4_wplv-" iotype="input">
-<Triggers>
-<NegativeEdge address="15"/>
-</Triggers>
-</Event>
-<Event name="cb5_wpar+" iotype="input">
-<Triggers>
-<PositiveEdge address="18"/>
-</Triggers>
-</Event>
-<Event name="cb5_wpar-" iotype="input">
-<Triggers>
-<PositiveEdge address="19"/>
-</Triggers>
-</Event>
-<Event name="cb5_wplv+" iotype="input">
-<Triggers>
-<NegativeEdge address="18"/>
-</Triggers>
-</Event>
-<Event name="cb5_wplv-" iotype="input">
-<Triggers>
-<NegativeEdge address="19"/>
-</Triggers>
-</Event>
-<Event name="ds1_p1s+" iotype="input">
-<Triggers>
-<PositiveEdge address="24"/>
-</Triggers>
-</Event>
-<Event name="ds1_p1s-" iotype="input">
-<Triggers>
-<PositiveEdge address="25"/>
-</Triggers>
-</Event>
-<Event name="ds1_p1wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="26"/>
-</Triggers>
-</Event>
-<Event name="ds1_p1wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="26"/>
-</Triggers>
-</Event>
-<Event name="ds2_p1s+" iotype="input">
-<Triggers>
-<PositiveEdge address="31"/>
-</Triggers>
-</Event>
-<Event name="ds2_p1s-" iotype="input">
-<Triggers>
-<PositiveEdge address="32"/>
-</Triggers>
-</Event>
-<Event name="ds2_p1wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="33"/>
-</Triggers>
-</Event>
-<Event name="ds2_p1wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="33"/>
-</Triggers>
-</Event>
-<Event name="ds3_p1s+" iotype="input">
-<Triggers>
-<PositiveEdge address="38"/>
-</Triggers>
-</Event>
-<Event name="ds3_p1s-" iotype="input">
-<Triggers>
-<PositiveEdge address="39"/>
-</Triggers>
-</Event>
-<Event name="ds3_p1wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="40"/>
-</Triggers>
-</Event>
-<Event name="ds3_p1wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="40"/>
-</Triggers>
-</Event>
-<Event name="pm1_mack" iotype="input">
-<Triggers>
-<NegativeEdge address="44"/>
-</Triggers>
-</Event>
-<Event name="pm1_mrqu" iotype="input">
-<Triggers>
-<PositiveEdge address="44"/>
-</Triggers>
-</Event>
-<Event name="pm1_ps+" iotype="input">
-<Triggers>
-<PositiveEdge address="47"/>
-</Triggers>
-</Event>
-<Event name="pm1_ps-" iotype="input">
-<Triggers>
-<NegativeEdge address="48"/>
-</Triggers>
-</Event>
-<Event name="pm1_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="49"/>
-</Triggers>
-</Event>
-<Event name="pm1_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="49"/>
-</Triggers>
-</Event>
-<Event name="pm2_mack" iotype="input">
-<Triggers>
-<NegativeEdge address="53"/>
-</Triggers>
-</Event>
-<Event name="pm2_mrqu" iotype="input">
-<Triggers>
-<PositiveEdge address="53"/>
-</Triggers>
-</Event>
-<Event name="pm2_ps+" iotype="input">
-<Triggers>
-<PositiveEdge address="56"/>
-</Triggers>
-</Event>
-<Event name="pm2_ps-" iotype="input">
-<Triggers>
-<NegativeEdge address="57"/>
-</Triggers>
-</Event>
-<Event name="pm2_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="58"/>
-</Triggers>
-</Event>
-<Event name="pm2_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="58"/>
-</Triggers>
-</Event>
-<Event name="rb1_sccw" iotype="input">
-<Triggers>
-<PositiveEdge address="63"/>
-</Triggers>
-</Event>
-<Event name="rb1_scw" iotype="input">
-<Triggers>
-<PositiveEdge address="64"/>
-</Triggers>
-</Event>
-<Event name="rb1_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="65"/>
-</Triggers>
-</Event>
-<Event name="rb1_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="65"/>
-</Triggers>
-</Event>
-<Event name="rb2_sccw" iotype="input">
-<Triggers>
-<PositiveEdge address="70"/>
-</Triggers>
-</Event>
-<Event name="rb2_scw" iotype="input">
-<Triggers>
-<PositiveEdge address="71"/>
-</Triggers>
-</Event>
-<Event name="rb2_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="72"/>
-</Triggers>
-</Event>
-<Event name="rb2_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="72"/>
-</Triggers>
-</Event>
-<Event name="sf_fdhome" iotype="input">
-<Triggers>
-<PositiveEdge address="74"/>
-</Triggers>
-</Event>
-<Event name="sf_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="75"/>
-</Triggers>
-</Event>
-<Event name="sf_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="75"/>
-</Triggers>
-</Event>
-<Event name="xs1_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="76"/>
-</Triggers>
-</Event>
-<Event name="xs1_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="76"/>
-</Triggers>
-</Event>
-<Event name="xs2_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="77"/>
-</Triggers>
-</Event>
-<Event name="xs2_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="77"/>
-</Triggers>
-</Event>
-<Event name="xs3_wpar" iotype="input">
-<Triggers>
-<PositiveEdge address="78"/>
-</Triggers>
-</Event>
-<Event name="xs3_wplv" iotype="input">
-<Triggers>
-<NegativeEdge address="78"/>
-</Triggers>
-</Event>
-<Event name="cb1_bm+" iotype="output">
-<Actions>
-<Clr address="1"/>
-<Set address="0"/>
-</Actions>
-</Event>
-<Event name="cb1_bm-" iotype="output">
-<Actions>
-<Clr address="0"/>
-<Set address="1"/>
-</Actions>
-</Event>
-<Event name="cb1_boff" iotype="output">
-<Actions>
-<Clr address="0"/>
-<Clr address="1"/>
-</Actions>
-</Event>
-<Event name="cb2_bm+" iotype="output">
-<Actions>
-<Clr address="5"/>
-<Set address="4"/>
-</Actions>
-</Event>
-<Event name="cb2_bm-" iotype="output">
-<Actions>
-<Clr address="4"/>
-<Set address="5"/>
-</Actions>
-</Event>
-<Event name="cb2_boff" iotype="output">
-<Actions>
-<Clr address="4"/>
-<Clr address="5"/>
-</Actions>
-</Event>
-<Event name="cb3_bm+" iotype="output">
-<Actions>
-<Clr address="9"/>
-<Set address="8"/>
-</Actions>
-</Event>
-<Event name="cb3_bm-" iotype="output">
-<Actions>
-<Clr address="8"/>
-<Set address="9"/>
-</Actions>
-</Event>
-<Event name="cb3_boff" iotype="output">
-<Actions>
-<Clr address="8"/>
-<Clr address="9"/>
-</Actions>
-</Event>
-<Event name="cb4_bm+" iotype="output">
-<Actions>
-<Clr address="13"/>
-<Set address="12"/>
-</Actions>
-</Event>
-<Event name="cb4_bm-" iotype="output">
-<Actions>
-<Clr address="12"/>
-<Set address="13"/>
-</Actions>
-</Event>
-<Event name="cb4_boff" iotype="output">
-<Actions>
-<Clr address="12"/>
-<Clr address="13"/>
-</Actions>
-</Event>
-<Event name="cb5_bm+" iotype="output">
-<Actions>
-<Clr address="17"/>
-<Set address="16"/>
-</Actions>
-</Event>
-<Event name="cb5_bm-" iotype="output">
-<Actions>
-<Clr address="16"/>
-<Set address="17"/>
-</Actions>
-</Event>
-<Event name="cb5_boff" iotype="output">
-<Actions>
-<Clr address="16"/>
-<Clr address="17"/>
-</Actions>
-</Event>
-<Event name="ds1_bm+" iotype="output">
-<Actions>
-<Clr address="21"/>
-<Set address="20"/>
-</Actions>
-</Event>
-<Event name="ds1_bm-" iotype="output">
-<Actions>
-<Clr address="20"/>
-<Set address="21"/>
-</Actions>
-</Event>
-<Event name="ds1_boff" iotype="output">
-<Actions>
-<Clr address="20"/>
-<Clr address="21"/>
-</Actions>
-</Event>
-<Event name="ds1_p1m+" iotype="output">
-<Actions>
-<Clr address="23"/>
-<Set address="22"/>
-</Actions>
-</Event>
-<Event name="ds1_p1m-" iotype="output">
-<Actions>
-<Clr address="22"/>
-<Set address="23"/>
-</Actions>
-</Event>
-<Event name="ds1_p1off" iotype="output">
-<Actions>
-<Clr address="22"/>
-<Clr address="23"/>
-</Actions>
-</Event>
-<Event name="ds2_bm+" iotype="output">
-<Actions>
-<Clr address="28"/>
-<Set address="27"/>
-</Actions>
-</Event>
-<Event name="ds2_bm-" iotype="output">
-<Actions>
-<Clr address="27"/>
-<Set address="28"/>
-</Actions>
-</Event>
-<Event name="ds2_boff" iotype="output">
-<Actions>
-<Clr address="27"/>
-<Clr address="28"/>
-</Actions>
-</Event>
-<Event name="ds2_p1m+" iotype="output">
-<Actions>
-<Clr address="30"/>
-<Set address="29"/>
-</Actions>
-</Event>
-<Event name="ds2_p1m-" iotype="output">
-<Actions>
-<Clr address="29"/>
-<Set address="30"/>
-</Actions>
-</Event>
-<Event name="ds2_p1off" iotype="output">
-<Actions>
-<Clr address="29"/>
-<Clr address="30"/>
-</Actions>
-</Event>
-<Event name="ds3_bm+" iotype="output">
-<Actions>
-<Clr address="35"/>
-<Set address="34"/>
-</Actions>
-</Event>
-<Event name="ds3_bm-" iotype="output">
-<Actions>
-<Clr address="34"/>
-<Set address="35"/>
-</Actions>
-</Event>
-<Event name="ds3_boff" iotype="output">
-<Actions>
-<Clr address="34"/>
-<Clr address="35"/>
-</Actions>
-</Event>
-<Event name="ds3_p1m+" iotype="output">
-<Actions>
-<Clr address="37"/>
-<Set address="36"/>
-</Actions>
-</Event>
-<Event name="ds3_p1m-" iotype="output">
-<Actions>
-<Clr address="36"/>
-<Set address="37"/>
-</Actions>
-</Event>
-<Event name="ds3_p1off" iotype="output">
-<Actions>
-<Clr address="36"/>
-<Clr address="37"/>
-</Actions>
-</Event>
-<Event name="pm1_bm+" iotype="output">
-<Actions>
-<Clr address="42"/>
-<Set address="41"/>
-</Actions>
-</Event>
-<Event name="pm1_bm-" iotype="output">
-<Actions>
-<Clr address="41"/>
-<Set address="42"/>
-</Actions>
-</Event>
-<Event name="pm1_boff" iotype="output">
-<Actions>
-<Clr address="41"/>
-<Clr address="42"/>
-</Actions>
-</Event>
-<Event name="pm1_moff" iotype="output">
-<Actions>
-<Clr address="43"/>
-</Actions>
-</Event>
-<Event name="pm1_mon" iotype="output">
-<Actions>
-<Set address="43"/>
-</Actions>
-</Event>
-<Event name="pm1_pm+" iotype="output">
-<Actions>
-<Clr address="46"/>
-<Set address="45"/>
-</Actions>
-</Event>
-<Event name="pm1_pm-" iotype="output">
-<Actions>
-<Clr address="45"/>
-<Set address="46"/>
-</Actions>
-</Event>
-<Event name="pm1_poff" iotype="output">
-<Actions>
-<Clr address="45"/>
-<Clr address="46"/>
-</Actions>
-</Event>
-<Event name="pm2_bm+" iotype="output">
-<Actions>
-<Clr address="51"/>
-<Set address="50"/>
-</Actions>
-</Event>
-<Event name="pm2_bm-" iotype="output">
-<Actions>
-<Clr address="50"/>
-<Set address="51"/>
-</Actions>
-</Event>
-<Event name="pm2_boff" iotype="output">
-<Actions>
-<Clr address="50"/>
-<Clr address="51"/>
-</Actions>
-</Event>
-<Event name="pm2_moff" iotype="output">
-<Actions>
-<Clr address="52"/>
-</Actions>
-</Event>
-<Event name="pm2_mon" iotype="output">
-<Actions>
-<Set address="52"/>
-</Actions>
-</Event>
-<Event name="pm2_pm+" iotype="output">
-<Actions>
-<Clr address="55"/>
-<Set address="54"/>
-</Actions>
-</Event>
-<Event name="pm2_pm-" iotype="output">
-<Actions>
-<Clr address="54"/>
-<Set address="55"/>
-</Actions>
-</Event>
-<Event name="pm2_poff" iotype="output">
-<Actions>
-<Clr address="54"/>
-<Clr address="55"/>
-</Actions>
-</Event>
-<Event name="rb1_bm+" iotype="output">
-<Actions>
-<Clr address="60"/>
-<Set address="59"/>
-</Actions>
-</Event>
-<Event name="rb1_bm-" iotype="output">
-<Actions>
-<Clr address="59"/>
-<Set address="60"/>
-</Actions>
-</Event>
-<Event name="rb1_boff" iotype="output">
-<Actions>
-<Clr address="59"/>
-<Clr address="60"/>
-</Actions>
-</Event>
-<Event name="rb1_rccw" iotype="output">
-<Actions>
-<Clr address="62"/>
-<Set address="61"/>
-</Actions>
-</Event>
-<Event name="rb1_rcw" iotype="output">
-<Actions>
-<Clr address="61"/>
-<Set address="62"/>
-</Actions>
-</Event>
-<Event name="rb1_roff" iotype="output">
-<Actions>
-<Clr address="61"/>
-<Clr address="62"/>
-</Actions>
-</Event>
-<Event name="rb2_bm+" iotype="output">
-<Actions>
-<Clr address="67"/>
-<Set address="66"/>
-</Actions>
-</Event>
-<Event name="rb2_bm-" iotype="output">
-<Actions>
-<Clr address="66"/>
-<Set address="67"/>
-</Actions>
-</Event>
-<Event name="rb2_boff" iotype="output">
-<Actions>
-<Clr address="66"/>
-<Clr address="67"/>
-</Actions>
-</Event>
-<Event name="rb2_rccw" iotype="output">
-<Actions>
-<Clr address="69"/>
-<Set address="68"/>
-</Actions>
-</Event>
-<Event name="rb2_rcw" iotype="output">
-<Actions>
-<Clr address="68"/>
-<Set address="69"/>
-</Actions>
-</Event>
-<Event name="rb2_roff" iotype="output">
-<Actions>
-<Clr address="68"/>
-<Clr address="69"/>
-</Actions>
-</Event>
-<Event name="sf_fdoff" iotype="output">
-<Actions>
-<Clr address="73"/>
-</Actions>
-</Event>
-<Event name="sf_fdon" iotype="output">
-<Actions>
-<Set address="73"/>
-</Actions>
-</Event>
-</EventConfiguration>
+    <TimeScale value="10" />
+    <SampleInterval value="1000" />
+    <SynchronousWrite value="true" />
+    <Role value="master" />
+    <SlaveAddress value="localhost:1502" />
+    <RemoteImage>
+        <Inputs mbaddr="0" count="79" />
+        <Outputs mbaddr="0" count="79" />
+    </RemoteImage>
+    <EventConfiguration>
+        <Event name="cb1_wpar+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="2" />
+            </Triggers>
+        </Event>
+        <Event name="cb1_wpar-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="3" />
+            </Triggers>
+        </Event>
+        <Event name="cb1_wplv+" iotype="input">
+            <Triggers>
+                <NegativeEdge address="2" />
+            </Triggers>
+        </Event>
+        <Event name="cb1_wplv-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="3" />
+            </Triggers>
+        </Event>
+        <Event name="cb2_wpar+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="6" />
+            </Triggers>
+        </Event>
+        <Event name="cb2_wpar-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="7" />
+            </Triggers>
+        </Event>
+        <Event name="cb2_wplv+" iotype="input">
+            <Triggers>
+                <NegativeEdge address="6" />
+            </Triggers>
+        </Event>
+        <Event name="cb2_wplv-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="7" />
+            </Triggers>
+        </Event>
+        <Event name="cb3_wpar+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="10" />
+            </Triggers>
+        </Event>
+        <Event name="cb3_wpar-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="11" />
+            </Triggers>
+        </Event>
+        <Event name="cb3_wplv+" iotype="input">
+            <Triggers>
+                <NegativeEdge address="10" />
+            </Triggers>
+        </Event>
+        <Event name="cb3_wplv-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="11" />
+            </Triggers>
+        </Event>
+        <Event name="cb4_wpar+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="14" />
+            </Triggers>
+        </Event>
+        <Event name="cb4_wpar-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="15" />
+            </Triggers>
+        </Event>
+        <Event name="cb4_wplv+" iotype="input">
+            <Triggers>
+                <NegativeEdge address="14" />
+            </Triggers>
+        </Event>
+        <Event name="cb4_wplv-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="15" />
+            </Triggers>
+        </Event>
+        <Event name="cb5_wpar+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="18" />
+            </Triggers>
+        </Event>
+        <Event name="cb5_wpar-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="19" />
+            </Triggers>
+        </Event>
+        <Event name="cb5_wplv+" iotype="input">
+            <Triggers>
+                <NegativeEdge address="18" />
+            </Triggers>
+        </Event>
+        <Event name="cb5_wplv-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="19" />
+            </Triggers>
+        </Event>
+        <Event name="ds1_p1s+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="24" />
+            </Triggers>
+        </Event>
+        <Event name="ds1_p1s-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="25" />
+            </Triggers>
+        </Event>
+        <Event name="ds1_p1wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="26" />
+            </Triggers>
+        </Event>
+        <Event name="ds1_p1wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="26" />
+            </Triggers>
+        </Event>
+        <Event name="ds2_p1s+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="31" />
+            </Triggers>
+        </Event>
+        <Event name="ds2_p1s-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="32" />
+            </Triggers>
+        </Event>
+        <Event name="ds2_p1wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="33" />
+            </Triggers>
+        </Event>
+        <Event name="ds2_p1wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="33" />
+            </Triggers>
+        </Event>
+        <Event name="ds3_p1s+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="38" />
+            </Triggers>
+        </Event>
+        <Event name="ds3_p1s-" iotype="input">
+            <Triggers>
+                <PositiveEdge address="39" />
+            </Triggers>
+        </Event>
+        <Event name="ds3_p1wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="40" />
+            </Triggers>
+        </Event>
+        <Event name="ds3_p1wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="40" />
+            </Triggers>
+        </Event>
+        <Event name="pm1_mack" iotype="input">
+            <Triggers>
+                <NegativeEdge address="44" />
+            </Triggers>
+        </Event>
+        <Event name="pm1_mrqu" iotype="input">
+            <Triggers>
+                <PositiveEdge address="44" />
+            </Triggers>
+        </Event>
+        <Event name="pm1_ps+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="47" />
+            </Triggers>
+        </Event>
+        <Event name="pm1_ps-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="48" />
+            </Triggers>
+        </Event>
+        <Event name="pm1_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="49" />
+            </Triggers>
+        </Event>
+        <Event name="pm1_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="49" />
+            </Triggers>
+        </Event>
+        <Event name="pm2_mack" iotype="input">
+            <Triggers>
+                <NegativeEdge address="53" />
+            </Triggers>
+        </Event>
+        <Event name="pm2_mrqu" iotype="input">
+            <Triggers>
+                <PositiveEdge address="53" />
+            </Triggers>
+        </Event>
+        <Event name="pm2_ps+" iotype="input">
+            <Triggers>
+                <PositiveEdge address="56" />
+            </Triggers>
+        </Event>
+        <Event name="pm2_ps-" iotype="input">
+            <Triggers>
+                <NegativeEdge address="57" />
+            </Triggers>
+        </Event>
+        <Event name="pm2_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="58" />
+            </Triggers>
+        </Event>
+        <Event name="pm2_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="58" />
+            </Triggers>
+        </Event>
+        <Event name="rb1_sccw" iotype="input">
+            <Triggers>
+                <PositiveEdge address="63" />
+            </Triggers>
+        </Event>
+        <Event name="rb1_scw" iotype="input">
+            <Triggers>
+                <PositiveEdge address="64" />
+            </Triggers>
+        </Event>
+        <Event name="rb1_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="65" />
+            </Triggers>
+        </Event>
+        <Event name="rb1_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="65" />
+            </Triggers>
+        </Event>
+        <Event name="rb2_sccw" iotype="input">
+            <Triggers>
+                <PositiveEdge address="70" />
+            </Triggers>
+        </Event>
+        <Event name="rb2_scw" iotype="input">
+            <Triggers>
+                <PositiveEdge address="71" />
+            </Triggers>
+        </Event>
+        <Event name="rb2_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="72" />
+            </Triggers>
+        </Event>
+        <Event name="rb2_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="72" />
+            </Triggers>
+        </Event>
+        <Event name="sf_fdhome" iotype="input">
+            <Triggers>
+                <PositiveEdge address="74" />
+            </Triggers>
+        </Event>
+        <Event name="sf_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="75" />
+            </Triggers>
+        </Event>
+        <Event name="sf_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="75" />
+            </Triggers>
+        </Event>
+        <Event name="xs1_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="76" />
+            </Triggers>
+        </Event>
+        <Event name="xs1_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="76" />
+            </Triggers>
+        </Event>
+        <Event name="xs2_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="77" />
+            </Triggers>
+        </Event>
+        <Event name="xs2_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="77" />
+            </Triggers>
+        </Event>
+        <Event name="xs3_wpar" iotype="input">
+            <Triggers>
+                <PositiveEdge address="78" />
+            </Triggers>
+        </Event>
+        <Event name="xs3_wplv" iotype="input">
+            <Triggers>
+                <NegativeEdge address="78" />
+            </Triggers>
+        </Event>
+        <Event name="cb1_bm+" iotype="output">
+            <Actions>
+                <Clr address="1" />
+                <Set address="0" />
+            </Actions>
+        </Event>
+        <Event name="cb1_bm-" iotype="output">
+            <Actions>
+                <Clr address="0" />
+                <Set address="1" />
+            </Actions>
+        </Event>
+        <Event name="cb1_boff" iotype="output">
+            <Actions>
+                <Clr address="0" />
+                <Clr address="1" />
+            </Actions>
+        </Event>
+        <Event name="cb2_bm+" iotype="output">
+            <Actions>
+                <Clr address="5" />
+                <Set address="4" />
+            </Actions>
+        </Event>
+        <Event name="cb2_bm-" iotype="output">
+            <Actions>
+                <Clr address="4" />
+                <Set address="5" />
+            </Actions>
+        </Event>
+        <Event name="cb2_boff" iotype="output">
+            <Actions>
+                <Clr address="4" />
+                <Clr address="5" />
+            </Actions>
+        </Event>
+        <Event name="cb3_bm+" iotype="output">
+            <Actions>
+                <Clr address="9" />
+                <Set address="8" />
+            </Actions>
+        </Event>
+        <Event name="cb3_bm-" iotype="output">
+            <Actions>
+                <Clr address="8" />
+                <Set address="9" />
+            </Actions>
+        </Event>
+        <Event name="cb3_boff" iotype="output">
+            <Actions>
+                <Clr address="8" />
+                <Clr address="9" />
+            </Actions>
+        </Event>
+        <Event name="cb4_bm+" iotype="output">
+            <Actions>
+                <Clr address="13" />
+                <Set address="12" />
+            </Actions>
+        </Event>
+        <Event name="cb4_bm-" iotype="output">
+            <Actions>
+                <Clr address="12" />
+                <Set address="13" />
+            </Actions>
+        </Event>
+        <Event name="cb4_boff" iotype="output">
+            <Actions>
+                <Clr address="12" />
+                <Clr address="13" />
+            </Actions>
+        </Event>
+        <Event name="cb5_bm+" iotype="output">
+            <Actions>
+                <Clr address="17" />
+                <Set address="16" />
+            </Actions>
+        </Event>
+        <Event name="cb5_bm-" iotype="output">
+            <Actions>
+                <Clr address="16" />
+                <Set address="17" />
+            </Actions>
+        </Event>
+        <Event name="cb5_boff" iotype="output">
+            <Actions>
+                <Clr address="16" />
+                <Clr address="17" />
+            </Actions>
+        </Event>
+        <Event name="ds1_bm+" iotype="output">
+            <Actions>
+                <Clr address="21" />
+                <Set address="20" />
+            </Actions>
+        </Event>
+        <Event name="ds1_bm-" iotype="output">
+            <Actions>
+                <Clr address="20" />
+                <Set address="21" />
+            </Actions>
+        </Event>
+        <Event name="ds1_boff" iotype="output">
+            <Actions>
+                <Clr address="20" />
+                <Clr address="21" />
+            </Actions>
+        </Event>
+        <Event name="ds1_p1m+" iotype="output">
+            <Actions>
+                <Clr address="23" />
+                <Set address="22" />
+            </Actions>
+        </Event>
+        <Event name="ds1_p1m-" iotype="output">
+            <Actions>
+                <Clr address="22" />
+                <Set address="23" />
+            </Actions>
+        </Event>
+        <Event name="ds1_p1off" iotype="output">
+            <Actions>
+                <Clr address="22" />
+                <Clr address="23" />
+            </Actions>
+        </Event>
+        <Event name="ds2_bm+" iotype="output">
+            <Actions>
+                <Clr address="28" />
+                <Set address="27" />
+            </Actions>
+        </Event>
+        <Event name="ds2_bm-" iotype="output">
+            <Actions>
+                <Clr address="27" />
+                <Set address="28" />
+            </Actions>
+        </Event>
+        <Event name="ds2_boff" iotype="output">
+            <Actions>
+                <Clr address="27" />
+                <Clr address="28" />
+            </Actions>
+        </Event>
+        <Event name="ds2_p1m+" iotype="output">
+            <Actions>
+                <Clr address="30" />
+                <Set address="29" />
+            </Actions>
+        </Event>
+        <Event name="ds2_p1m-" iotype="output">
+            <Actions>
+                <Clr address="29" />
+                <Set address="30" />
+            </Actions>
+        </Event>
+        <Event name="ds2_p1off" iotype="output">
+            <Actions>
+                <Clr address="29" />
+                <Clr address="30" />
+            </Actions>
+        </Event>
+        <Event name="ds3_bm+" iotype="output">
+            <Actions>
+                <Clr address="35" />
+                <Set address="34" />
+            </Actions>
+        </Event>
+        <Event name="ds3_bm-" iotype="output">
+            <Actions>
+                <Clr address="34" />
+                <Set address="35" />
+            </Actions>
+        </Event>
+        <Event name="ds3_boff" iotype="output">
+            <Actions>
+                <Clr address="34" />
+                <Clr address="35" />
+            </Actions>
+        </Event>
+        <Event name="ds3_p1m+" iotype="output">
+            <Actions>
+                <Clr address="37" />
+                <Set address="36" />
+            </Actions>
+        </Event>
+        <Event name="ds3_p1m-" iotype="output">
+            <Actions>
+                <Clr address="36" />
+                <Set address="37" />
+            </Actions>
+        </Event>
+        <Event name="ds3_p1off" iotype="output">
+            <Actions>
+                <Clr address="36" />
+                <Clr address="37" />
+            </Actions>
+        </Event>
+        <Event name="pm1_bm+" iotype="output">
+            <Actions>
+                <Clr address="42" />
+                <Set address="41" />
+            </Actions>
+        </Event>
+        <Event name="pm1_bm-" iotype="output">
+            <Actions>
+                <Clr address="41" />
+                <Set address="42" />
+            </Actions>
+        </Event>
+        <Event name="pm1_boff" iotype="output">
+            <Actions>
+                <Clr address="41" />
+                <Clr address="42" />
+            </Actions>
+        </Event>
+        <Event name="pm1_moff" iotype="output">
+            <Actions>
+                <Clr address="43" />
+            </Actions>
+        </Event>
+        <Event name="pm1_mon" iotype="output">
+            <Actions>
+                <Set address="43" />
+            </Actions>
+        </Event>
+        <Event name="pm1_pm+" iotype="output">
+            <Actions>
+                <Clr address="46" />
+                <Set address="45" />
+            </Actions>
+        </Event>
+        <Event name="pm1_pm-" iotype="output">
+            <Actions>
+                <Clr address="45" />
+                <Set address="46" />
+            </Actions>
+        </Event>
+        <Event name="pm1_poff" iotype="output">
+            <Actions>
+                <Clr address="45" />
+                <Clr address="46" />
+            </Actions>
+        </Event>
+        <Event name="pm2_bm+" iotype="output">
+            <Actions>
+                <Clr address="51" />
+                <Set address="50" />
+            </Actions>
+        </Event>
+        <Event name="pm2_bm-" iotype="output">
+            <Actions>
+                <Clr address="50" />
+                <Set address="51" />
+            </Actions>
+        </Event>
+        <Event name="pm2_boff" iotype="output">
+            <Actions>
+                <Clr address="50" />
+                <Clr address="51" />
+            </Actions>
+        </Event>
+        <Event name="pm2_moff" iotype="output">
+            <Actions>
+                <Clr address="52" />
+            </Actions>
+        </Event>
+        <Event name="pm2_mon" iotype="output">
+            <Actions>
+                <Set address="52" />
+            </Actions>
+        </Event>
+        <Event name="pm2_pm+" iotype="output">
+            <Actions>
+                <Clr address="55" />
+                <Set address="54" />
+            </Actions>
+        </Event>
+        <Event name="pm2_pm-" iotype="output">
+            <Actions>
+                <Clr address="54" />
+                <Set address="55" />
+            </Actions>
+        </Event>
+        <Event name="pm2_poff" iotype="output">
+            <Actions>
+                <Clr address="54" />
+                <Clr address="55" />
+            </Actions>
+        </Event>
+        <Event name="rb1_bm+" iotype="output">
+            <Actions>
+                <Clr address="60" />
+                <Set address="59" />
+            </Actions>
+        </Event>
+        <Event name="rb1_bm-" iotype="output">
+            <Actions>
+                <Clr address="59" />
+                <Set address="60" />
+            </Actions>
+        </Event>
+        <Event name="rb1_boff" iotype="output">
+            <Actions>
+                <Clr address="59" />
+                <Clr address="60" />
+            </Actions>
+        </Event>
+        <Event name="rb1_rccw" iotype="output">
+            <Actions>
+                <Clr address="62" />
+                <Set address="61" />
+            </Actions>
+        </Event>
+        <Event name="rb1_rcw" iotype="output">
+            <Actions>
+                <Clr address="61" />
+                <Set address="62" />
+            </Actions>
+        </Event>
+        <Event name="rb1_roff" iotype="output">
+            <Actions>
+                <Clr address="61" />
+                <Clr address="62" />
+            </Actions>
+        </Event>
+        <Event name="rb2_bm+" iotype="output">
+            <Actions>
+                <Clr address="67" />
+                <Set address="66" />
+            </Actions>
+        </Event>
+        <Event name="rb2_bm-" iotype="output">
+            <Actions>
+                <Clr address="66" />
+                <Set address="67" />
+            </Actions>
+        </Event>
+        <Event name="rb2_boff" iotype="output">
+            <Actions>
+                <Clr address="66" />
+                <Clr address="67" />
+            </Actions>
+        </Event>
+        <Event name="rb2_rccw" iotype="output">
+            <Actions>
+                <Clr address="69" />
+                <Set address="68" />
+            </Actions>
+        </Event>
+        <Event name="rb2_rcw" iotype="output">
+            <Actions>
+                <Clr address="68" />
+                <Set address="69" />
+            </Actions>
+        </Event>
+        <Event name="rb2_roff" iotype="output">
+            <Actions>
+                <Clr address="68" />
+                <Clr address="69" />
+            </Actions>
+        </Event>
+        <Event name="sf_fdoff" iotype="output">
+            <Actions>
+                <Clr address="73" />
+            </Actions>
+        </Event>
+        <Event name="sf_fdon" iotype="output">
+            <Actions>
+                <Set address="73" />
+            </Actions>
+        </Event>
+    </EventConfiguration>
 </ModbusDevice>
