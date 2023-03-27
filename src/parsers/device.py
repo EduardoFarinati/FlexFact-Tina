@@ -15,6 +15,17 @@ class Trigger:
     address: int
     type: TriggerTypes
 
+    def check(self, previous: bool, now: bool) -> bool:
+        """A convenience function just to check if two values of a signal
+        represent transition (event).
+        """
+        if self.type == TriggerTypes.POSITIVE_EDGE:
+            return previous != now and now
+        elif self.type == TriggerTypes.NEGATIVE_EDGE:
+            return previous != now and not now
+
+        raise ValueError(f"Invalid trigger type: {self.type}")
+
 
 @dataclass
 class InputEvent:

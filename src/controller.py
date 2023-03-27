@@ -1,24 +1,10 @@
 from typing import Dict, Tuple
 from pymodbus.exceptions import ModbusException
 
-from parsers.device import InputEvent, OutputEvent, TriggerTypes
+from parsers.device import InputEvent, OutputEvent
 from modbus_client import ModbusClient
 from petri_net import PetriNet
 from special_tokens import strip_name, COMMENT
-
-
-def check_transition(
-    trigger_type: TriggerTypes, signal_values: Tuple[bool, bool]
-) -> bool:
-    """
-    A convenience function just to check if two values of a signal
-    represent a rising or falling transition.
-    """
-    previous, next = signal_values
-    if trigger_type == TriggerTypes.POSITIVE_EDGE:
-        return previous != next and next
-    elif trigger_type == TriggerTypes.NEGATIVE_EDGE:
-        return previous != next and not next
 
 
 class Controller:
@@ -109,25 +95,15 @@ class Controller:
             # Check if the FlexFact requirements are met (ie. if a sensor has
             # just turn on or off). Adding ; to the start of a name means it
             # is ignored and the transition is allowed
-            if not transition.name.startswith(COMMENT):
-                name = strip_name(transition.name)
-                if name in self.inputs:
-                    # There are technically multiple triggers defined
-                    # This probably should be modified to work too, instead of
-                    # using [0], but in my use it was never needed. I can't
-                    # actually think when this would be used
-
-                    # Check if the signal is rising or falling, or vice-versa
-                    did_transition = False
-                    for trigger in self.inputs[name].triggers:
-                        # Should it be rising or falling to transition
-                        if check_transition(
-                            trigger.type, self.read_values[trigger.address]
-                        ):
-                            did_transition = True
-                            break
-                else:
-                    did_transition = True
+            name = strip_name(transition.name)
+            if not transition.name.startswith(COMMENT) and name in self.inputs:
+                # Check if the signal is rising or falling, or vice-versa
+                did_transition = False
+                for trigger in self.inputs[name].triggers:
+                    # Should it be rising or falling to transition
+                    if trigger.check(*self.read_values[trigger.address]):
+                        did_transition = True
+                        break
             else:
                 did_transition = True
 
