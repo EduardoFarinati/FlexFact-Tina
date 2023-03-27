@@ -1,19 +1,24 @@
 from typing import Dict, Tuple
 from pymodbus.exceptions import ModbusException
 
-from parsers.device import InputEvent, OutputEvent
+from parsers.device import InputEvent, OutputEvent, TriggerTypes
 from modbus_client import ModbusClient
 from petri_net import PetriNet
 from special_tokens import strip_name, COMMENT
 
 
-def check_transition(edge_type: bool, signal_values: Tuple[bool, bool]):
+def check_transition(
+    trigger_type: TriggerTypes, signal_values: Tuple[bool, bool]
+) -> bool:
     """
     A convenience function just to check if two values of a signal
     represent a rising or falling transition.
     """
     previous, next = signal_values
-    return previous != next == edge_type
+    if trigger_type == TriggerTypes.POSITIVE_EDGE:
+        return previous != next and next
+    elif trigger_type == TriggerTypes.NEGATIVE_EDGE:
+        return previous != next and not next
 
 
 class Controller:
@@ -32,7 +37,11 @@ class Controller:
         # Get all the addresses. These addresses appear more than once in the
         # .net file so use a set to avoid repeats
         self.addresses = set(
-            [i[0] for value in self.inputs.values() for i in value.triggers]
+            [
+                trigger.address
+                for value in self.inputs.values()
+                for trigger in value.triggers
+            ]
         )
 
         # Intantiate the read values to false. This is needed because we use
@@ -55,7 +64,7 @@ class Controller:
         result = False
         for trigger in self.inputs[event].triggers:
             try:
-                readval = self.client.read_discrete_inputs(trigger[0])
+                readval = self.client.read_discrete_inputs(trigger.address)
                 result = result or readval.bits[0]
             except ModbusException as e:
                 raise ConnectionResetError("Can't read discrete input") from e
@@ -112,10 +121,8 @@ class Controller:
                     did_transition = False
                     for trigger in self.inputs[name].triggers:
                         # Should it be rising or falling to transition
-                        address, edge_type = trigger
-
                         if check_transition(
-                            edge_type, self.read_values[address]
+                            trigger.type, self.read_values[trigger.address]
                         ):
                             did_transition = True
                             break

@@ -1,12 +1,24 @@
 from dataclasses import dataclass, field
+from enum import Enum, auto
 from pathlib import Path
 from typing import Dict, List, Tuple, Union
 import xml.etree.cElementTree as ET
 
 
+class TriggerTypes(Enum):
+    POSITIVE_EDGE = auto()
+    NEGATIVE_EDGE = auto()
+
+
+@dataclass
+class Trigger:
+    address: int
+    type: TriggerTypes
+
+
 @dataclass
 class InputEvent:
-    triggers: List[Tuple[int, bool]] = field(default_factory=list)
+    triggers: List[Trigger] = field(default_factory=list)
 
 
 @dataclass
@@ -55,8 +67,18 @@ def parse(
 
                 address = int(raw_address)
 
-                rising = element.tag == "PositiveEdge"  # Rising edge or not
-                event.triggers.append((address, rising))
+                if element.tag == "PositiveEdge":
+                    event.triggers.append(
+                        Trigger(address, TriggerTypes.POSITIVE_EDGE)
+                    )
+                elif element.tag == "NegativeEdge":
+                    event.triggers.append(
+                        Trigger(address, TriggerTypes.NEGATIVE_EDGE)
+                    )
+                else:
+                    raise AssertionError(
+                        "Expected positive or negative edge as triggers"
+                    )
             inputs[name] = event
         else:
             event = OutputEvent()
