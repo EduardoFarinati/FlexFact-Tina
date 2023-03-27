@@ -2,7 +2,7 @@ from typing import Dict, Tuple
 from pymodbus.exceptions import ModbusException
 
 from parsers.device import InputEvent, OutputEvent
-from modbus_client import ModbusClient
+from modbus.client import ModbusClient
 from petri_net import PetriNet
 from special_tokens import strip_name, COMMENT
 
