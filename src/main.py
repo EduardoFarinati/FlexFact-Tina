@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
 import time
-from typing import Dict, List, Tuple
+from typing import Tuple
 
 import cli
 from parsers import network, device
 from controller import Controller
+from petri_net import PetriNet
 
 
 RECONNECT_PERIOD_S = 1.5
 
 
-def header_message(
-    address: Tuple[str, int],
-    transitions: List[network.Transition],
-    places: Dict[str, int],
-):
+def header_message(address: Tuple[str, int], petri_network: PetriNet):
     print(f"Controlling FlexFact plant at {address}, with:")
-    print(f"  Transitions: {len(transitions)}")
-    print(f"  Places: {len(places)}")
+    print(f"  Transitions: {len(petri_network.transitions)}")
+    print(f"  Places: {len(petri_network.places)}")
     print("")
 
 
@@ -39,15 +36,15 @@ def main():
     device_path, network_path, sleep_period = cli.get_args()
 
     # Parse config
-    transitions, places = network.parse(network_path)
+    petri_network = network.parse(network_path)
     address, inputs, outputs = device.parse(device_path)
 
     # Start controller
     while True:
-        header_message(address, transitions, places)
+        header_message(address, petri_network)
         try:
             with Controller(
-                address, transitions, places, inputs, outputs
+                address, petri_network, inputs, outputs
             ) as controller:
                 print("Operation display:")
                 while True:

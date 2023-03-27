@@ -1,9 +1,10 @@
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 from pymodbus.exceptions import ModbusException
 
-from parsers.network import InputArcTypes, Transition
+from parsers.network import InputArcTypes
 from parsers.device import InputEvent, OutputEvent
 from modbus_client import ModbusClient
+from petri_net import PetriNet
 from special_tokens import strip_name, COMMENT
 
 
@@ -20,14 +21,12 @@ class Controller:
     def __init__(
         self,
         address: Tuple[str, int],
-        transitions: List[Transition],
-        places: Dict[str, int],
+        petri_network: PetriNet,
         inputs: Dict[str, InputEvent],
         outputs: Dict[str, OutputEvent],
     ):
         self.client = ModbusClient(address)
-        self.transitions = transitions
-        self.places = places
+        self.petri_network = petri_network
         self.inputs = inputs
         self.outputs = outputs
 
@@ -98,7 +97,7 @@ class Controller:
         self.read_all()
 
         # Iterate through all the transitions in a network
-        for transition in self.transitions:
+        for transition in self.petri_network.transitions:
             # Check if the FlexFact requirements are met (ie. if a sensor has
             # just turn on or off). Adding ; to the start of a name means it
             # is ignored and the transition is allowed
@@ -124,7 +123,7 @@ class Controller:
                 did_transition = True
 
             # If all requirements are met
-            if transition.is_enabled(self.places) and did_transition:
+            if transition.is_enabled() and did_transition:
                 print(f"  t: {transition.name}")
 
                 # Move the tokens around
@@ -135,12 +134,13 @@ class Controller:
                     _type = input_arc.type
 
                     if _type == InputArcTypes.REGULAR:
-                        self.places[place] -= weight
+                        place.tokens -= weight
+
                 for output_arc in transition.output_arcs:
                     place = output_arc.place
                     weight = output_arc.weight
 
-                    self.places[place] += weight
+                    place.tokens += weight
 
                 # Issue the commands via Modbus. Note that ; is also used to
                 # separate between command in the name, so you can use less
