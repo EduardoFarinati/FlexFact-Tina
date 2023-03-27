@@ -107,10 +107,9 @@ class Controller:
             else:
                 did_transition = True
 
-            # If all requirements are met
-            if transition.is_enabled() and did_transition:
+            # If an event has occured, tries to fire the transition
+            if did_transition and transition.try_fire():
                 print(f"  t: {transition.name}")
-                transition.fire()
 
                 # Issue the commands via Modbus. Note that ; is also used to
                 # separate between command in the name, so you can use less

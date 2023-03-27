@@ -103,19 +103,21 @@ class Transition:
 
         return True
 
-    def fire(self):
-        """Fire the transition, indicating it's triggering event
-        has occurred. The tokens are then moved around accordingly."""
-
-        # Raise error is the transition is not enabled
-        if not self.is_enabled():
-            raise Exception(
-                f"The transition {self.name} is not enabled with:"
-                f" {self.input_arcs}"
-            )
-
+    def force_fire(self):
+        """Fire the transition, moving it's tokens around. Should only
+        be called when the transition is enabled."""
         for arc in chain(self.input_arcs, self.output_arcs):
             arc.move_tokens()
+
+    def try_fire(self) -> bool:
+        """Try to fire the transition, indicating it's triggering event
+        has occurred. If the trasition is enabled, it's tokens are
+        then moved around accordingly."""
+        if not self.is_enabled():
+            return False
+
+        self.force_fire()
+        return True
 
 
 @dataclass
