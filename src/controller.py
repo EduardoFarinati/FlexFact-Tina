@@ -108,14 +108,17 @@ class Controller:
                     # using [0], but in my use it was never needed. I can't
                     # actually think when this would be used
 
-                    # Should it be rising or falling to transition
-                    edge_type = self.inputs[name].triggers[0][1]
-                    address = self.inputs[name].triggers[0][0]
-
                     # Check if the signal is rising or falling, or vice-versa
-                    did_transition = check_transition(
-                        edge_type, self.read_values[address]
-                    )
+                    did_transition = False
+                    for trigger in self.inputs[name].triggers:
+                        # Should it be rising or falling to transition
+                        address, edge_type = trigger
+
+                        if check_transition(
+                            edge_type, self.read_values[address]
+                        ):
+                            did_transition = True
+                            break
                 else:
                     did_transition = True
             else:
