@@ -1,7 +1,6 @@
 from typing import Dict, Tuple
 from pymodbus.exceptions import ModbusException
 
-from parsers.network import InputArcTypes
 from parsers.device import InputEvent, OutputEvent
 from modbus_client import ModbusClient
 from petri_net import PetriNet
@@ -125,22 +124,7 @@ class Controller:
             # If all requirements are met
             if transition.is_enabled() and did_transition:
                 print(f"  t: {transition.name}")
-
-                # Move the tokens around
-                # This is a basic implementation of a Petri net runner
-                for input_arc in transition.input_arcs:
-                    place = input_arc.place
-                    weight = input_arc.weight
-                    _type = input_arc.type
-
-                    if _type == InputArcTypes.REGULAR:
-                        place.tokens -= weight
-
-                for output_arc in transition.output_arcs:
-                    place = output_arc.place
-                    weight = output_arc.weight
-
-                    place.tokens += weight
+                transition.fire()
 
                 # Issue the commands via Modbus. Note that ; is also used to
                 # separate between command in the name, so you can use less

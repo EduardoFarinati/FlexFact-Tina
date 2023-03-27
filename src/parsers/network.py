@@ -6,8 +6,18 @@ from petri_net import (
     OutputArc,
     PetriNet,
     Place,
+    Tokens,
     Transition,
 )
+
+
+def get_or_insert_place(network: PetriNet, place_name: str) -> Place:
+    place = network.get_place(place_name)
+    if not place:
+        place = Place(place_name, Tokens(0))
+        network.add_place(place)
+
+    return place
 
 
 def parse(filepath: Path) -> PetriNet:
@@ -34,17 +44,13 @@ def parse(filepath: Path) -> PetriNet:
                 for element in elements[3:arrow_index]:
                     if "?" in element:
                         place_name, weight = element.split("?", 1)
-
-                        place = network.get_place(place_name)
-                        if not place:
-                            place = Place(place_name, 0)
-                            network.add_place(place)
+                        place = get_or_insert_place(network, place_name)
 
                         if int(weight) > 0:
                             transition.input_arcs.append(
                                 InputArc(
                                     place,
-                                    int(weight),
+                                    Tokens(int(weight)),
                                     InputArcTypes.READ,
                                 )
                             )
@@ -52,7 +58,7 @@ def parse(filepath: Path) -> PetriNet:
                             transition.input_arcs.append(
                                 InputArc(
                                     place,
-                                    abs(int(weight)),
+                                    Tokens(abs(int(weight))),
                                     InputArcTypes.INHIBITOR,
                                 )
                             )
@@ -60,21 +66,20 @@ def parse(filepath: Path) -> PetriNet:
                         parts = element.split("*")
 
                         place_name = parts[0]
-                        place = network.get_place(place_name)
-                        if not place:
-                            place = Place(place_name, 0)
-                            network.add_place(place)
+                        place = get_or_insert_place(network, place_name)
 
                         if len(parts) == 1:
                             transition.input_arcs.append(
-                                InputArc(place, 1, InputArcTypes.REGULAR)
+                                InputArc(
+                                    place, Tokens(1), InputArcTypes.REGULAR
+                                )
                             )
                         else:
                             weight = parts[1]
                             transition.input_arcs.append(
                                 InputArc(
                                     place,
-                                    int(weight),
+                                    Tokens(int(weight)),
                                     InputArcTypes.REGULAR,
                                 )
                             )
@@ -84,19 +89,16 @@ def parse(filepath: Path) -> PetriNet:
                         parts = element.split("*")
 
                         place_name = parts[0]
-                        place = network.get_place(place_name)
-                        if not place:
-                            place = Place(place_name, 0)
-                            network.add_place(place)
+                        place = get_or_insert_place(network, place_name)
 
                         if len(parts) == 1:
                             transition.output_arcs.append(
-                                OutputArc(place, 1)
+                                OutputArc(place, Tokens(1))
                             )
                         else:
                             weight = parts[1]
                             transition.output_arcs.append(
-                                OutputArc(place, int(weight))
+                                OutputArc(place, Tokens(int(weight)))
                             )
 
                 network.add_transition(transition)
@@ -105,11 +107,7 @@ def parse(filepath: Path) -> PetriNet:
                 place_name = elements[1]
                 marking = int(elements[2].replace("(", "").replace(")", ""))
 
-                place = network.get_place(place_name)
-                if not place:
-                    place = Place(place_name, marking)
-                    network.add_place(place)
-                else:
-                    place.tokens = marking
+                place = get_or_insert_place(network, place_name)
+                place.tokens = Tokens(marking)
 
     return network

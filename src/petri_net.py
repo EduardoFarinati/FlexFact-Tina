@@ -1,6 +1,29 @@
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import List, Union
+from itertools import chain
+from typing import List, Union, Self
+
+
+class Tokens(int):
+    """Amount of tokens in a Petri net, must be positive or zero."""
+
+    def __new__(cls, value, *args, **kwargs):
+        if value < 0:
+            raise ValueError("Amount of tokens must positive or zero.")
+        return super().__new__(cls, value, *args, **kwargs)
+
+    def __add__(self, other: Self):
+        return self.__class__(super().__add__(other))
+
+    def __sub__(self, other: Self):
+        return self.__class__(super().__sub__(other))
+
+    def __mul__(self, _):
+        raise ValueError("Multiplication of tokens is not defined.")
+
+    def __div__(self, _):
+        raise ValueError("Division of tokens is not defined.")
 
 
 @dataclass
@@ -8,20 +31,28 @@ class Place:
     """Representation of a Petri net place, with its number of tokens."""
 
     name: str
-    tokens: int
+    tokens: Tokens
 
 
 @dataclass
-class Arc:
+class Arc(ABC):
     """Representation of an arc."""
 
     place: Place
-    weight: int
+    weight: Tokens
+
+    @abstractmethod
+    def move_tokens(self):
+        pass
 
 
 @dataclass
 class OutputArc(Arc):
     """Representation of an output arc."""
+
+    def move_tokens(self):
+        """Adds tokens to the output place."""
+        self.place.tokens += self.weight
 
 
 class InputArcTypes(Enum):
@@ -45,6 +76,11 @@ class InputArc(Arc):
 
         return self.place.tokens >= self.weight
 
+    def move_tokens(self):
+        """Removes tokens from the input place."""
+        if self.type == InputArcTypes.REGULAR:
+            self.place.tokens -= self.weight
+
 
 @dataclass
 class Transition:
@@ -66,6 +102,20 @@ class Transition:
                 return False
 
         return True
+
+    def fire(self):
+        """Fire the transition, indicating it's triggering event
+        has occurred. The tokens are then moved around accordingly."""
+
+        # Raise error is the transition is not enabled
+        if not self.is_enabled():
+            raise Exception(
+                f"The transition {self.name} is not enabled with:"
+                f" {self.input_arcs}"
+            )
+
+        for arc in chain(self.input_arcs, self.output_arcs):
+            arc.move_tokens()
 
 
 @dataclass
