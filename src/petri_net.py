@@ -146,9 +146,8 @@ class PetriNet:
 
     def add_place(self, place: Place):
         i = self._place_mapping.get(place.name)
-        if i:
-            # Overwrites place if it is
-            # already added in the network
+        if i is not None:
+            # Overwrites place if it is already present in the network
             self.places[i] = place
         else:
             self._place_mapping[place.name] = len(self.places)
@@ -156,9 +155,8 @@ class PetriNet:
 
     def add_transition(self, transition: Transition):
         i = self._transition_mapping.get(transition.name)
-        if i:
-            # Overwrites transition if it is
-            # already added in the network
+        if i is not None:
+            # Overwrites transition if it is already present in the network
             self.transitions[i] = transition
         else:
             self._transition_mapping[transition.name] = len(self.transitions)
@@ -166,15 +164,17 @@ class PetriNet:
 
     def get_place(self, name: str) -> Union[Place, None]:
         i = self._place_mapping.get(name)
-        if i:
-            return self.places[i]
-        return None
+        if i is None:
+            return None
+
+        return self.places[i]
 
     def get_transition(self, name: str) -> Union[Transition, None]:
         i = self._transition_mapping.get(name)
-        if i:
-            return self.transitions[i]
-        return None
+        if i is None:
+            return None
+
+        return self.transitions[i]
 
     def get_marking(self) -> List[int]:
         return [place.tokens for place in self.places]
